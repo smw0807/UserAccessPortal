@@ -4,13 +4,19 @@ definePageMeta({
   title: '로그인',
   description: '로그인 페이지입니다.',
 });
+const rules = useRules();
 
-const rules = {
-  email: [
-    (v: string) => !!v || '이메일을 입력해주세요.',
-    (v: string) => /.+@.+\..+/.test(v) || '이메일 형식이 올바르지 않습니다.',
-  ],
-  password: [(v: string) => !!v || '비밀번호를 입력해주세요.'],
+const showSignUp = ref(false);
+
+const email = ref('');
+const password = ref('');
+
+const signup = async (data: { email: string; password: string }) => {
+  try {
+    console.log('data : ', data);
+  } catch (e) {
+    console.error(e);
+  }
 };
 </script>
 <template>
@@ -23,6 +29,7 @@ const rules = {
     <h4 class="text-h5 font-weight-bold mb-4">로그인</h4>
 
     <v-text-field
+      v-model="email"
       class="mb-4"
       color="red-accent-2"
       label="이메일"
@@ -30,6 +37,7 @@ const rules = {
       :rules="rules.email"
     />
     <v-text-field
+      v-model="password"
       class="mb-4"
       color="red-accent-2"
       label="비밀번호"
@@ -74,9 +82,11 @@ const rules = {
       size="x-large"
       variant="outlined"
       block
+      @click="showSignUp = true"
     >
       회원가입
     </v-btn>
+    <Dialog-SignUp v-model="showSignUp" @signup="signup" />
   </v-sheet>
 </template>
 <style scoped>
