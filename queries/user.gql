@@ -1,3 +1,10 @@
+mutation SignUp($input: SignUpInput!) {
+  signUp(input: $input) {
+    success
+    message
+  }
+}
+
 query VerifyPassword($email: String!, $password: String!) {
   verifyPassword(email: $email, password: $password) {
     success
