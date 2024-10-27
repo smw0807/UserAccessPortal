@@ -1,0 +1,13 @@
+query VerifyPassword($email: String!, $password: String!) {
+  verifyPassword(email: $email, password: $password) {
+    success
+    message
+  }
+}
+
+query FindUserByEmail($email: String!) {
+  findUserByEmail(email: $email) {
+    success
+    message
+  }
+}

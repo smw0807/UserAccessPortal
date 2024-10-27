@@ -2,6 +2,7 @@ import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify';
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  ssr: false,
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
   build: {
@@ -14,5 +15,11 @@ export default defineNuxtConfig({
       });
     },
     '@pinia/nuxt',
+    'nuxt-graphql-client',
   ],
+  runtimeConfig: {
+    public: {
+      GQL_HOST: import.meta.env.GQL_HOST,
+    },
+  },
 });
