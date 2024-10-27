@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { SignUpInput } from '#gql/default';
+import { useSignupStore } from '~/store/signup';
 definePageMeta({
   layout: 'login',
   title: '로그인',
@@ -11,9 +13,13 @@ const showSignUp = ref(false);
 const email = ref('');
 const password = ref('');
 
-const signup = async (data: { email: string; password: string }) => {
+const store = useSignupStore();
+const signup = async (data: SignUpInput) => {
   try {
-    console.log('data : ', data);
+    const result = await store.signup(data);
+    if (result) {
+      showSignUp.value = false;
+    }
   } catch (e) {
     console.error(e);
   }
