@@ -38,7 +38,7 @@ watch(open, (value) => {
 });
 </script>
 <template>
-  <v-dialog v-model="open" persistent>
+  <v-dialog v-model="open" persistent width="60%">
     <v-sheet>
       <v-card class="pa-5">
         <h4 class="text-h5 font-weight-bold mb-4">회원가입</h4>
