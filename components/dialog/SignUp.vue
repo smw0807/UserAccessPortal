@@ -13,17 +13,29 @@ const emit = defineEmits(['signup', 'update:modelValue']);
 const form = ref();
 const rules = useRules();
 const email = ref('');
+const name = ref('');
 const password = ref('');
 const passwordConfirm = ref('');
 
-const signup = () => {
-  if (form.value.validate()) {
-    emit('signup', {
-      email: email.value,
-      password: password.value,
-    });
-  }
+const signup = async () => {
+  const { valid } = await form.value.validate();
+  if (!valid) return;
+
+  emit('signup', {
+    email: email.value,
+    name: name.value,
+    password: password.value,
+  });
 };
+// 닫히면 초기화
+watch(open, (value) => {
+  if (!value) {
+    email.value = '';
+    name.value = '';
+    password.value = '';
+    passwordConfirm.value = '';
+  }
+});
 </script>
 <template>
   <v-dialog v-model="open" persistent>
@@ -38,6 +50,14 @@ const signup = () => {
             label="이메일"
             outlined
             :rules="rules.email"
+          />
+          <v-text-field
+            v-model="name"
+            class="mb-4"
+            color="red-accent-2"
+            :rules="rules.text"
+            label="이름"
+            outlined
           />
           <v-text-field
             v-model="password"
