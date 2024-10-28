@@ -14,16 +14,16 @@ const email = ref('');
 const password = ref('');
 
 const store = useSignupStore();
+// 회원가입
 const signup = async (data: SignUpInput) => {
-  try {
-    const result = await store.signup(data);
-    if (result) {
-      showSignUp.value = false;
-    }
-  } catch (e) {
-    console.error(e);
+  const result = await store.signup(data);
+  if (result) {
+    showSignUp.value = false;
   }
 };
+
+// 이메일 로그인
+const emailLogin = async () => {};
 </script>
 <template>
   <v-sheet
