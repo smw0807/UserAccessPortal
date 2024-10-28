@@ -1,6 +1,6 @@
 import type { SignUpInput } from '#gql/default';
 
-export const useSignupStore = defineStore('signup', () => {
+export const useAuthStore = defineStore('signup', () => {
   const GqlInstance = useGql();
   const { useAlert, useConfirm } = useDialog();
   // ============= STATE =============
@@ -31,7 +31,34 @@ export const useSignupStore = defineStore('signup', () => {
       return false;
     }
   };
-  const actions = { signup };
+
+  const signinForEmail = async (email: string, password: string) => {
+    try {
+      const data = await GqlInstance('EmailSignIn', { email, password });
+      if (!data.emailSignIn?.success) {
+        useAlert({
+          title: '로그인에 실패했습니다.',
+          type: 'error',
+          message: data.emailSignIn?.message,
+        });
+        return false;
+      }
+      console.log('data : ', data);
+      if (data.emailSignIn?.success && data.emailSignIn.token) {
+        localStorage.setItem(
+          'accessToken',
+          data.emailSignIn?.token?.accessToken
+        );
+        localStorage.setItem(
+          'refreshToken',
+          data.emailSignIn?.token?.refreshToken
+        );
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+  const actions = { signup, signinForEmail };
   return {
     ...state,
     ...actions,

@@ -1,0 +1,10 @@
+query EmailSignIn($email: String!, $password: String!) {
+  emailSignIn(email: $email, password: $password) {
+    success
+    message
+    token {
+      accessToken
+      refreshToken
+    }
+  }
+}
