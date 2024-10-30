@@ -7,6 +7,7 @@ export const useAuthStore = defineStore('signup', () => {
   const state = {};
 
   // ============= ACTIONS =============
+  // 회원가입
   const signup = async (input: SignUpInput) => {
     const confirm = await useConfirm({
       title: '회원가입을 진행하시겠습니까?',
@@ -32,6 +33,7 @@ export const useAuthStore = defineStore('signup', () => {
     }
   };
 
+  // 이메일 로그인
   const signinForEmail = async (email: string, password: string) => {
     try {
       const data = await GqlInstance('EmailSignIn', { email, password });
@@ -58,7 +60,15 @@ export const useAuthStore = defineStore('signup', () => {
       console.error(e);
     }
   };
-  const actions = { signup, signinForEmail };
+
+  // 구글 로그인
+  const signinForGoogle = async () => {
+    console.log('signinForGoogle');
+    const res = await $fetch('/api/auth/google');
+    console.log('res : ', res);
+  };
+
+  const actions = { signup, signinForEmail, signinForGoogle };
   return {
     ...state,
     ...actions,

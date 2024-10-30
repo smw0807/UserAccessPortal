@@ -27,6 +27,14 @@ const emailLogin = async () => {
   if (!valid) return;
   await store.signinForEmail(email.value, password.value);
 };
+// 지메일 로그인
+const googleLogin = async () => {
+  await store.signinForGoogle();
+};
+// 카카오 로그인
+const kakaoLogin = async () => {
+  console.log('kakaoLogin');
+};
 </script>
 <template>
   <v-sheet
@@ -72,6 +80,7 @@ const emailLogin = async () => {
         size="x-large"
         variant="flat"
         block
+        @click="googleLogin"
       >
         <img src="/google.svg" />
         지메일 로그인
@@ -82,6 +91,7 @@ const emailLogin = async () => {
         size="x-large"
         variant="flat"
         block
+        @click="kakaoLogin"
       >
         <img src="/kakaotalk.svg" />
         카카오 로그인
