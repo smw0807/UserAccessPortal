@@ -61,14 +61,17 @@ export const useAuthStore = defineStore('signup', () => {
     }
   };
 
-  // 구글 로그인
-  const signinForGoogle = async () => {
-    console.log('signinForGoogle');
-    const res = await $fetch('/api/auth/google');
-    console.log('res : ', res);
+  // 구글 로그인 URL 조회
+  const getSigninUrlForGoogle = async () => {
+    try {
+      const { data } = await useFetch('/api/auth/signin/google');
+      return data.value;
+    } catch (e) {
+      console.error(e);
+    }
   };
 
-  const actions = { signup, signinForEmail, signinForGoogle };
+  const actions = { signup, signinForEmail, getSigninUrlForGoogle };
   return {
     ...state,
     ...actions,

@@ -29,7 +29,8 @@ const emailLogin = async () => {
 };
 // 지메일 로그인
 const googleLogin = async () => {
-  await store.signinForGoogle();
+  const url = await store.getSigninUrlForGoogle();
+  window.location.href = url as string;
 };
 // 카카오 로그인
 const kakaoLogin = async () => {
