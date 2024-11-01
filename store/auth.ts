@@ -70,8 +70,34 @@ export const useAuthStore = defineStore('signup', () => {
       console.error(e);
     }
   };
+  // 구글 로그인 인증
+  const signinForGoogle = async (code: string) => {
+    try {
+      const { data, error } = await useFetch<{
+        accessToken: string;
+        refreshToken: string;
+      }>('/api/auth/callback/google', {
+        query: { code },
+      });
+      if (error.value) {
+        throw '회원가입 실패';
+      }
+      if (data.value) {
+        localStorage.setItem('accessToken', data.value.accessToken);
+        localStorage.setItem('refreshToken', data.value.refreshToken);
+      }
+    } catch (e) {
+      console.error(e);
+      throw e;
+    }
+  };
 
-  const actions = { signup, signinForEmail, getSigninUrlForGoogle };
+  const actions = {
+    signup,
+    signinForEmail,
+    getSigninUrlForGoogle,
+    signinForGoogle,
+  };
   return {
     ...state,
     ...actions,
