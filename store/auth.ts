@@ -7,9 +7,8 @@ export type Token = {
 export const useAuthStore = defineStore('signup', () => {
   const GqlInstance = useGql();
   const { useAlert, useConfirm } = useDialog();
+  const { setToken } = useAuth();
   // ============= STATE =============
-  const accessTokenName = 'user-access-hub-access-token';
-  const refreshTokenName = 'user-access-hub-refresh-token';
   const state = {};
 
   // ============= ACTIONS =============
@@ -51,17 +50,10 @@ export const useAuthStore = defineStore('signup', () => {
         });
         return false;
       }
-      console.log('data : ', data);
       if (data.emailSignIn?.success && data.emailSignIn.token) {
-        localStorage.setItem(
-          accessTokenName,
-          data.emailSignIn?.token?.access_token
-        );
-        localStorage.setItem(
-          refreshTokenName,
-          data.emailSignIn?.token?.refresh_token
-        );
+        setToken(data.emailSignIn.token);
       }
+      return true;
     } catch (e) {
       console.error(e);
     }
@@ -89,8 +81,7 @@ export const useAuthStore = defineStore('signup', () => {
         throw '회원가입 실패';
       }
       if (data.value) {
-        localStorage.setItem(accessTokenName, data.value.access_token);
-        localStorage.setItem(refreshTokenName, data.value.refresh_token);
+        setToken(data.value);
       }
     } catch (e) {
       console.error(e);
@@ -121,8 +112,7 @@ export const useAuthStore = defineStore('signup', () => {
         throw '회원가입 실패';
       }
       if (data.value) {
-        localStorage.setItem(accessTokenName, data.value.access_token);
-        localStorage.setItem(refreshTokenName, data.value.refresh_token);
+        setToken(data.value);
       }
     } catch (e) {
       console.error(e);
