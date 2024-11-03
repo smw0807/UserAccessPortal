@@ -28,8 +28,10 @@ const router = useRouter();
 const emailLogin = async () => {
   const { valid } = await form.value.validate();
   if (!valid) return;
-  await store.signinForEmail(email.value, password.value);
-  router.push('/');
+  const result = await store.signinForEmail(email.value, password.value);
+  if (result) {
+    router.push('/');
+  }
 };
 // 지메일 로그인
 const googleLogin = async () => {
