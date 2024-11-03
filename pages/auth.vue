@@ -6,7 +6,9 @@ definePageMeta({
 });
 const authStore = useAuthStore();
 const route = useRoute();
+console.log('route : ', route.query);
 const code = route.query.code;
+const state = route.query.state;
 
 const isProcessing: Ref<boolean> = ref(true);
 const isError: Ref<boolean> = ref(false);
@@ -20,9 +22,13 @@ const bodyText: Ref<string> = ref(
 );
 
 // 토큰 정보 요청
-const requestDiscordToken = async () => {
+const requestToken = async () => {
   try {
-    await authStore.signinForGoogle(code as string);
+    if (state === 'kakao') {
+      await authStore.signinForKakao(code as string);
+    } else {
+      await authStore.signinForGoogle(code as string);
+    }
     changeText('success');
     setTimeout(() => router.push('/'), 3000);
   } catch (e) {
@@ -32,7 +38,7 @@ const requestDiscordToken = async () => {
   }
   isProcessing.value = false;
 };
-requestDiscordToken();
+requestToken();
 
 // 화면 문구 변경
 const changeText = (type: 'success' | 'error') => {

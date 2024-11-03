@@ -3,8 +3,8 @@ query EmailSignIn($email: String!, $password: String!) {
     success
     message
     token {
-      accessToken
-      refreshToken
+      access_token
+      refresh_token
     }
   }
 }

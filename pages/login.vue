@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import type { SignUpInput } from '#gql/default';
 import { useAuthStore } from '~/store/auth';
+import { useRouter } from 'vue-router';
+
 definePageMeta({
   layout: 'login',
   title: '로그인',
@@ -22,10 +24,12 @@ const signup = async (data: SignUpInput) => {
 };
 const form = ref();
 // 이메일 로그인
+const router = useRouter();
 const emailLogin = async () => {
   const { valid } = await form.value.validate();
   if (!valid) return;
   await store.signinForEmail(email.value, password.value);
+  router.push('/');
 };
 // 지메일 로그인
 const googleLogin = async () => {
@@ -34,7 +38,8 @@ const googleLogin = async () => {
 };
 // 카카오 로그인
 const kakaoLogin = async () => {
-  console.log('kakaoLogin');
+  const url = await store.getSigninUrlForKakao();
+  window.location.href = url as string;
 };
 </script>
 <template>

@@ -1,9 +1,15 @@
 import type { SignUpInput } from '#gql/default';
 
+export type Token = {
+  access_token: string;
+  refresh_token: string;
+};
 export const useAuthStore = defineStore('signup', () => {
   const GqlInstance = useGql();
   const { useAlert, useConfirm } = useDialog();
   // ============= STATE =============
+  const accessTokenName = 'user-access-hub-access-token';
+  const refreshTokenName = 'user-access-hub-refresh-token';
   const state = {};
 
   // ============= ACTIONS =============
@@ -48,12 +54,12 @@ export const useAuthStore = defineStore('signup', () => {
       console.log('data : ', data);
       if (data.emailSignIn?.success && data.emailSignIn.token) {
         localStorage.setItem(
-          'accessToken',
-          data.emailSignIn?.token?.accessToken
+          accessTokenName,
+          data.emailSignIn?.token?.access_token
         );
         localStorage.setItem(
-          'refreshToken',
-          data.emailSignIn?.token?.refreshToken
+          refreshTokenName,
+          data.emailSignIn?.token?.refresh_token
         );
       }
     } catch (e) {
@@ -73,22 +79,53 @@ export const useAuthStore = defineStore('signup', () => {
   // 구글 로그인 인증
   const signinForGoogle = async (code: string) => {
     try {
-      const { data, error } = await useFetch<{
-        accessToken: string;
-        refreshToken: string;
-      }>('/api/auth/callback/google', {
-        query: { code },
-      });
+      const { data, error } = await useFetch<Token>(
+        '/api/auth/callback/google',
+        {
+          query: { code },
+        }
+      );
       if (error.value) {
         throw '회원가입 실패';
       }
       if (data.value) {
-        localStorage.setItem('accessToken', data.value.accessToken);
-        localStorage.setItem('refreshToken', data.value.refreshToken);
+        localStorage.setItem(accessTokenName, data.value.access_token);
+        localStorage.setItem(refreshTokenName, data.value.refresh_token);
       }
     } catch (e) {
       console.error(e);
       throw e;
+    }
+  };
+
+  // 카카오 로그인 URL 조회
+  const getSigninUrlForKakao = async () => {
+    try {
+      const { data } = await useFetch('/api/auth/signin/kakao');
+      console.log('data : ', data);
+      return data.value;
+    } catch (e) {
+      console.error(e);
+    }
+  };
+  // 카카오 로그인 인증
+  const signinForKakao = async (code: string) => {
+    try {
+      const { data, error } = await useFetch<Token>(
+        '/api/auth/callback/kakao',
+        {
+          query: { code },
+        }
+      );
+      if (error.value) {
+        throw '회원가입 실패';
+      }
+      if (data.value) {
+        localStorage.setItem(accessTokenName, data.value.access_token);
+        localStorage.setItem(refreshTokenName, data.value.refresh_token);
+      }
+    } catch (e) {
+      console.error(e);
     }
   };
 
@@ -97,6 +134,8 @@ export const useAuthStore = defineStore('signup', () => {
     signinForEmail,
     getSigninUrlForGoogle,
     signinForGoogle,
+    getSigninUrlForKakao,
+    signinForKakao,
   };
   return {
     ...state,
