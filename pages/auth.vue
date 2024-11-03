@@ -6,7 +6,7 @@ definePageMeta({
 });
 const authStore = useAuthStore();
 const route = useRoute();
-console.log('route : ', route.query);
+
 const code = route.query.code;
 const state = route.query.state;
 
