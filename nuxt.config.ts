@@ -20,6 +20,8 @@ export default defineNuxtConfig({
     public: {
       GQL_HOST: import.meta.env.GQL_HOST,
       API_HOST: import.meta.env.API_HOST,
+      ACCESS_TOKEN_NAME: import.meta.env.ACCESS_TOKEN_NAME,
+      REFRESH_TOKEN_NAME: import.meta.env.REFRESH_TOKEN_NAME,
     },
   },
 });

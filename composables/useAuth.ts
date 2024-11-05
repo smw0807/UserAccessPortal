@@ -1,10 +1,9 @@
 import type { Token } from '~/store/auth';
 
 export default function useAuth() {
-  const accessTokenName = 'user-access-hub-access-token';
-  const refreshTokenName = 'user-access-hub-refresh-token';
-  const cookie = useCookie(accessTokenName);
-  const refreshCookie = useCookie(refreshTokenName);
+  const config = useRuntimeConfig();
+  const cookie = useCookie(config.public.ACCESS_TOKEN_NAME);
+  const refreshCookie = useCookie(config.public.REFRESH_TOKEN_NAME);
 
   return {
     setToken: (token: Token) => {
