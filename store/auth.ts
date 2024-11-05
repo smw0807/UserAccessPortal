@@ -52,6 +52,7 @@ export const useAuthStore = defineStore('signup', () => {
       }
       if (data.emailSignIn?.success && data.emailSignIn.token) {
         setToken(data.emailSignIn.token);
+        useGqlToken(data.emailSignIn?.token.access_token);
       }
       return true;
     } catch (e) {
@@ -82,6 +83,7 @@ export const useAuthStore = defineStore('signup', () => {
       }
       if (data.value) {
         setToken(data.value);
+        useGqlToken(data.value.access_token);
       }
     } catch (e) {
       console.error(e);
@@ -113,6 +115,7 @@ export const useAuthStore = defineStore('signup', () => {
       }
       if (data.value) {
         setToken(data.value);
+        useGqlToken(data.value.access_token);
       }
     } catch (e) {
       console.error(e);
