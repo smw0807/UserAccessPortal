@@ -18,3 +18,10 @@ query FindUserByEmail($email: String!) {
     message
   }
 }
+
+query CheckAdminUser {
+  checkAdminUser {
+    success
+    message
+  }
+}
