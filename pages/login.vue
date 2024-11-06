@@ -36,12 +36,16 @@ const emailLogin = async () => {
 // 지메일 로그인
 const googleLogin = async () => {
   const url = await store.getSigninUrlForGoogle();
-  window.location.href = url as string;
+  if (url) {
+    window.location.href = url as string;
+  }
 };
 // 카카오 로그인
 const kakaoLogin = async () => {
   const url = await store.getSigninUrlForKakao();
-  window.location.href = url as string;
+  if (url) {
+    window.location.href = url as string;
+  }
 };
 </script>
 <template>
