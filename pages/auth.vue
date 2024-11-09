@@ -34,22 +34,27 @@ const requestToken = async () => {
   } catch (e) {
     isError.value = true;
     changeIcon();
-    changeText('error');
+    changeText('error', e as string);
   }
   isProcessing.value = false;
 };
 requestToken();
 
 // 화면 문구 변경
-const changeText = (type: 'success' | 'error') => {
-  if (type === 'success') {
-    titleText.value = '로그인 인증 완료.';
-    bodyText.value =
-      '잠시후 메인화면으로 이동합니다.<br />잠시만 기다려주세요!';
-  } else if (type === 'error') {
+const changeText = (type: 'success' | 'error', message?: string) => {
+  if (message) {
     titleText.value = '로그인에 실패했습니다.';
-    bodyText.value =
-      '다시 로그인을 시도해주세요.<br />아래 버튼을 클릭하면 다시 로그인 페이지로 이동합니다.';
+    bodyText.value = message;
+  } else {
+    if (type === 'success') {
+      titleText.value = '로그인 인증 완료.';
+      bodyText.value =
+        '잠시후 메인화면으로 이동합니다.<br />잠시만 기다려주세요!';
+    } else if (type === 'error') {
+      titleText.value = '로그인에 실패했습니다.';
+      bodyText.value =
+        '다시 로그인을 시도해주세요.<br />아래 버튼을 클릭하면 다시 로그인 페이지로 이동합니다.';
+    }
   }
 };
 // 화면 아이콘 변경

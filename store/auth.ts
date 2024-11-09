@@ -79,7 +79,7 @@ export const useAuthStore = defineStore('signup', () => {
         }
       );
       if (error.value) {
-        throw '회원가입 실패';
+        throw error.value.data;
       }
       if (data.value) {
         setToken(data.value);
@@ -111,7 +111,7 @@ export const useAuthStore = defineStore('signup', () => {
         }
       );
       if (error.value) {
-        throw '회원가입 실패';
+        throw error.value.data;
       }
       if (data.value) {
         setToken(data.value);
