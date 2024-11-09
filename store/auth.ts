@@ -122,6 +122,17 @@ export const useAuthStore = defineStore('signup', () => {
     }
   };
 
+  // 토큰 검증
+  const verifyToken = async () => {
+    try {
+      const data = await GqlInstance('VerifyToken', {});
+      console.log('data: ', data);
+      return data.verifyToken?.success;
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   const actions = {
     signup,
     signinForEmail,
@@ -129,6 +140,7 @@ export const useAuthStore = defineStore('signup', () => {
     signinForGoogle,
     getSigninUrlForKakao,
     signinForKakao,
+    verifyToken,
   };
   return {
     ...state,
