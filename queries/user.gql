@@ -12,10 +12,28 @@ query VerifyPassword($email: String!, $password: String!) {
   }
 }
 
-query FindUserByEmail($email: String!) {
-  findUserByEmail(email: $email) {
+query FindUserByEmail {
+  findUserByEmail {
     success
     message
+    user {
+      id
+      email
+      name
+      password
+      type
+      role
+      status
+      lastLoginAt
+      profileImage
+      phoneNumber
+      emailVerified
+      twoFactorEnabled
+      resetPasswordToken
+      resetPasswordTokenExpires
+      createdAt
+      updatedAt
+    }
   }
 }
 
