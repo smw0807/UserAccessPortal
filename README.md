@@ -1,75 +1,15 @@
-# Nuxt Minimal Starter
+# USER ACCESS PORTAL
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+## 프로젝트 설명
 
-## Setup
+- 사용자 로그인 및 회원가입
+- 사용자 인증 및 권한 관리
+- 사용자 정보 조회
 
-Make sure to install dependencies:
+# 참고 URL
 
-```bash
-# npm
-npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+- [Nuxt 3 공식 문서](https://nuxt.com/docs/getting-started/introduction)
+- [Nuxt 3 공식 문서 - 쿠키 설정](https://nuxt.com/docs/api/composables/use-cookie)
+- [Nuxt 3 모듈 - Nuxt GraphQL Client](https://nuxt-graphql-client.web.app/)
+- [Nuxt 3 디자인프레임워크 - Vuetify3](https://vuetifyjs.com/en/)
+- [Nuxt 3 상태관리 - Pinia](https://pinia.vuejs.org/)
