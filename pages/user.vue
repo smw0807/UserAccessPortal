@@ -3,11 +3,13 @@ import { useUserStore } from '~/store/user';
 definePageMeta({
   layout: 'user',
 });
-const { getUserInfo } = useUserStore();
+const store = useUserStore();
+const cUser = computed(() => store.userInfo);
+
 onMounted(async () => {
-  await getUserInfo();
+  await store.getUserInfo();
 });
 </script>
 <template>
-  <div>user</div>
+  <div>{{ cUser }}</div>
 </template>

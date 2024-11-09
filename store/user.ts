@@ -2,6 +2,7 @@ export const useUserStore = defineStore('user', () => {
   const GqlInstance = useGql();
   // ============= STATE =============
   const userInfo = ref();
+  const state = { userInfo };
 
   // ============= ACTIONS =============
   // 관리자 여부 체크
@@ -32,6 +33,7 @@ export const useUserStore = defineStore('user', () => {
   };
 
   return {
+    ...state,
     ...actions,
   };
 });
