@@ -1,5 +1,7 @@
 export const useUserStore = defineStore('user', () => {
   const GqlInstance = useGql();
+  // ============= STATE =============
+  const userInfo = ref();
 
   // ============= ACTIONS =============
   // 관리자 여부 체크
@@ -11,8 +13,22 @@ export const useUserStore = defineStore('user', () => {
       console.error(e);
     }
   };
+
+  // 사용자 정보 가져오기
+  const getUserInfo = async () => {
+    try {
+      const data = await GqlInstance('FindUserByEmail', {});
+      if (data.findUserByEmail?.success) {
+        userInfo.value = data.findUserByEmail?.user;
+      }
+      return data.findUserByEmail;
+    } catch (e) {
+      console.error(e);
+    }
+  };
   const actions = {
     checkAdminUser,
+    getUserInfo,
   };
 
   return {
