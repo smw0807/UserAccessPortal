@@ -8,3 +8,10 @@ query EmailSignIn($email: String!, $password: String!) {
     }
   }
 }
+
+query VerifyToken {
+  verifyToken {
+    success
+    message
+  }
+}
