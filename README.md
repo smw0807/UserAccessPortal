@@ -6,6 +6,18 @@
 - 사용자 인증 및 권한 관리
 - 사용자 정보 조회
 
+## .env
+
+```bash
+GQL_HOST=
+API_HOST=
+
+# 토큰 쿠키 이름
+ACCESS_TOKEN_NAME=
+REFRESH_TOKEN_NAME=
+
+```
+
 # 참고 URL
 
 - [Nuxt 3 공식 문서](https://nuxt.com/docs/getting-started/introduction)
