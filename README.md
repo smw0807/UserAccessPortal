@@ -25,3 +25,4 @@ REFRESH_TOKEN_NAME=
 - [Nuxt 3 모듈 - Nuxt GraphQL Client](https://nuxt-graphql-client.web.app/)
 - [Nuxt 3 디자인프레임워크 - Vuetify3](https://vuetifyjs.com/en/)
 - [Nuxt 3 상태관리 - Pinia](https://pinia.vuejs.org/)
+- [mdi - 아이콘](https://pictogrammers.com/library/mdi/)
