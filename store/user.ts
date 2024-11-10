@@ -22,7 +22,6 @@ export const useUserStore = defineStore('user', () => {
       if (data.findUserByEmail?.success) {
         userInfo.value = data.findUserByEmail?.user;
       }
-      return data.findUserByEmail;
     } catch (e) {
       console.error(e);
     }
