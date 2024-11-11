@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import dayjs from 'dayjs';
 import { useUserStore } from '~/store/user';
+import { useAuthStore } from '~/store/auth';
 definePageMeta({
   layout: 'user',
 });
 const store = useUserStore();
+const authStore = useAuthStore();
+const router = useRouter();
 const cUser = computed(() => store.userInfo);
 
 const loginType = computed(() => {
@@ -37,7 +40,8 @@ const lastLogin = computed(() => {
 });
 
 const logout = () => {
-  console.log('logout');
+  authStore.logout();
+  router.push('/login');
 };
 
 onMounted(async () => {

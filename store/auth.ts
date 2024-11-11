@@ -7,7 +7,7 @@ export type Token = {
 export const useAuthStore = defineStore('signup', () => {
   const GqlInstance = useGql();
   const { useAlert, useConfirm } = useDialog();
-  const { setToken } = useAuth();
+  const { setToken, removeToken } = useAuth();
   // ============= STATE =============
   const state = {};
 
@@ -133,6 +133,12 @@ export const useAuthStore = defineStore('signup', () => {
     }
   };
 
+  // 로그아웃
+  const logout = async () => {
+    removeToken();
+    useGqlToken(null);
+  };
+
   const actions = {
     signup,
     signinForEmail,
@@ -141,6 +147,7 @@ export const useAuthStore = defineStore('signup', () => {
     getSigninUrlForKakao,
     signinForKakao,
     verifyToken,
+    logout,
   };
   return {
     ...state,
