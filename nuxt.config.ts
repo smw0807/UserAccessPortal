@@ -24,4 +24,14 @@ export default defineNuxtConfig({
       REFRESH_TOKEN_NAME: import.meta.env.REFRESH_TOKEN_NAME,
     },
   },
+  'graphql-client': {
+    tokenStorage: {
+      name: 'user-access-hub-gql-token',
+      mode: 'cookie',
+      cookieOptions: {
+        path: '/',
+        maxAge: 60 * 60 * 24 * 365,
+      },
+    },
+  },
 });
