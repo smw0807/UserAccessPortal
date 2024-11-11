@@ -59,7 +59,7 @@ onMounted(async () => {
               :src="cUser.profileImage"
               sizes="100"
             />
-            <v-icon v-else>mdi-account</v-icon>
+            <v-icon v-else size="70">mdi-account</v-icon>
           </v-avatar>
         </template>
         <v-list-item-title class="text-h4">{{
