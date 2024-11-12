@@ -40,3 +40,11 @@ query CheckAdminUser {
     message
   }
 }
+
+# 휴대폰 번호 수정
+mutation SavePhoneNumber($phoneNumber: String!) {
+  savePhoneNumber(phoneNumber: $phoneNumber) {
+    success
+    message
+  }
+}
