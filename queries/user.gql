@@ -1,3 +1,4 @@
+# 회원가입
 mutation SignUp($input: SignUpInput!) {
   signUp(input: $input) {
     success
@@ -5,6 +6,7 @@ mutation SignUp($input: SignUpInput!) {
   }
 }
 
+# 비밀번호 확인
 query VerifyPassword($email: String!, $password: String!) {
   verifyPassword(email: $email, password: $password) {
     success
@@ -12,6 +14,7 @@ query VerifyPassword($email: String!, $password: String!) {
   }
 }
 
+# 이메일로 사용자 조회
 query FindUserByEmail {
   findUserByEmail {
     success
@@ -30,6 +33,7 @@ query FindUserByEmail {
   }
 }
 
+# 관리자 여부 확인
 query CheckAdminUser {
   checkAdminUser {
     success

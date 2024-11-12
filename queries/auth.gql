@@ -1,3 +1,4 @@
+# 이메일 로그인
 query EmailSignIn($email: String!, $password: String!) {
   emailSignIn(email: $email, password: $password) {
     success
@@ -9,6 +10,7 @@ query EmailSignIn($email: String!, $password: String!) {
   }
 }
 
+# 토큰 검증
 query VerifyToken {
   verifyToken {
     success
