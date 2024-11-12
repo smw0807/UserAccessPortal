@@ -1,4 +1,5 @@
 export const useUserStore = defineStore('user', () => {
+  const { useAlert, useConfirm } = useDialog();
   const GqlInstance = useGql();
   // ============= STATE =============
   const userInfo = ref();
@@ -24,11 +25,45 @@ export const useUserStore = defineStore('user', () => {
       }
     } catch (e) {
       console.error(e);
+      console.log(e.gqlErrors[0].message);
     }
   };
+
+  // 휴대폰 번호 수정
+  const savePhoneNumber = async (phoneNumber: string) => {
+    try {
+      const confirm = await useConfirm({
+        type: 'info',
+        title: '휴대폰 번호 수정',
+        message: '휴대폰 번호를 수정하시겠습니까?',
+      });
+      if (!confirm) {
+        return;
+      }
+      const data = await GqlInstance('SavePhoneNumber', { phoneNumber });
+      if (data.savePhoneNumber?.success) {
+        useAlert({
+          type: 'success',
+          title: '휴대폰 번호 수정',
+          message: data.savePhoneNumber.message,
+        });
+        await getUserInfo();
+      } else {
+        useAlert({
+          type: 'error',
+          title: '휴대폰 번호 수정',
+          message: data.savePhoneNumber?.message,
+        });
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   const actions = {
     checkAdminUser,
     getUserInfo,
+    savePhoneNumber,
   };
 
   return {

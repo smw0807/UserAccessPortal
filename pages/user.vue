@@ -39,6 +39,11 @@ const lastLogin = computed(() => {
   return dayjs(cUser.value?.lastLoginAt).format('YYYY-MM-DD HH:mm:ss');
 });
 
+const dialogPhoneNumber = ref(false);
+const savePhoneNumber = async (phoneNumber: string) => {
+  await store.savePhoneNumber(phoneNumber);
+};
+
 const logout = () => {
   authStore.logout();
   router.push('/login');
@@ -49,6 +54,10 @@ onMounted(async () => {
 });
 </script>
 <template>
+  <dialog-users-phone-number
+    v-model="dialogPhoneNumber"
+    @phone-number="savePhoneNumber"
+  />
   <v-card width="30%">
     <v-card-text>
       <v-list-item class="te">
@@ -89,7 +98,12 @@ onMounted(async () => {
           }}</v-list-item-subtitle>
           <template v-slot:append>
             <v-list-item-action>
-              <v-btn icon="mdi-pencil" variant="text" size="small" />
+              <v-btn
+                icon="mdi-pencil"
+                variant="text"
+                size="small"
+                @click="dialogPhoneNumber = true"
+              />
             </v-list-item-action>
           </template>
         </v-list-item>
