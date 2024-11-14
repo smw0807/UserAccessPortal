@@ -7,6 +7,7 @@ export default defineNuxtConfig({
   build: {
     transpile: ['vuetify'],
   },
+  plugins: ['~/plugins/graphql-error.ts'],
   modules: [
     (options: any, nuxt: any) => {
       nuxt.hooks.hook('vite:extendConfig', (config: any) => {
