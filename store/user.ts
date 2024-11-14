@@ -25,7 +25,6 @@ export const useUserStore = defineStore('user', () => {
       }
     } catch (e) {
       console.error(e);
-      console.log(e.gqlErrors[0].message);
     }
   };
 
@@ -48,15 +47,17 @@ export const useUserStore = defineStore('user', () => {
           message: data.savePhoneNumber.message,
         });
         await getUserInfo();
-      } else {
-        useAlert({
-          type: 'error',
-          title: '휴대폰 번호 수정',
-          message: data.savePhoneNumber?.message,
-        });
+        return true;
       }
+      useAlert({
+        type: 'error',
+        title: '휴대폰 번호 수정',
+        message: data.savePhoneNumber?.message,
+      });
+      return false;
     } catch (e) {
       console.error(e);
+      return false;
     }
   };
 

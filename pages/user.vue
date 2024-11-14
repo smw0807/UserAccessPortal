@@ -41,7 +41,10 @@ const lastLogin = computed(() => {
 
 const dialogPhoneNumber = ref(false);
 const savePhoneNumber = async (phoneNumber: string) => {
-  await store.savePhoneNumber(phoneNumber);
+  const result = await store.savePhoneNumber(phoneNumber);
+  if (result) {
+    dialogPhoneNumber.value = false;
+  }
 };
 
 const logout = () => {
