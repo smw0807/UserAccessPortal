@@ -1,3 +1,5 @@
+import { useAuthStore } from '~/store/auth';
+
 export default defineNuxtPlugin(() => {
   useGqlError((err) => {
     // Only log during development
@@ -14,19 +16,25 @@ export default defineNuxtPlugin(() => {
     }
 
     // Handle different error cases
-    const tokenExpired = err.gqlErrors.some(
-      (e) => console.error('id-token-expired', e.message),
-      e.message.includes('id-token-expired')
-    );
-    const tokenRevoked = err.gqlErrors.some(
-      (e) => console.error('id-token-revoked', e.message),
-      e.message.includes('id-token-revoked')
-    );
-    const unauthorized = err.gqlErrors.some(
-      (e) => console.error('unauthorized', e.message),
-      e.message.includes('invalid-claims') ||
+    const tokenExpired = err.gqlErrors.some((e) => {
+      return e.message.includes('id-token-expired');
+    });
+
+    const tokenRevoked = err.gqlErrors.some((e) => {
+      return e.message.includes('id-token-revoked');
+    });
+
+    const unauthorized = err.gqlErrors.some((e) => {
+      return (
+        e.message.includes('invalid-claims') ||
         e.message.includes('insufficient-permission')
-    );
+      );
+    });
+
+    if (!unauthorized) {
+      const authStore = useAuthStore();
+      //
+    }
 
     // take action accordingly...
   });
