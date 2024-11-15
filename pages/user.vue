@@ -7,7 +7,6 @@ definePageMeta({
 });
 const store = useUserStore();
 const authStore = useAuthStore();
-const router = useRouter();
 const cUser = computed(() => store.userInfo);
 
 const loginType = computed(() => {
@@ -49,7 +48,6 @@ const savePhoneNumber = async (phoneNumber: string) => {
 
 const logout = () => {
   authStore.logout();
-  router.push('/login');
 };
 
 onMounted(async () => {

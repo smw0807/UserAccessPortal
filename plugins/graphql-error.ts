@@ -1,7 +1,7 @@
 import { useAuthStore } from '~/store/auth';
 
 export default defineNuxtPlugin(() => {
-  useGqlError((err) => {
+  useGqlError(async (err) => {
     // Only log during development
     if (process.env.NODE_ENV !== 'production') {
       for (const gqlError of err.gqlErrors) {
@@ -33,9 +33,10 @@ export default defineNuxtPlugin(() => {
 
     if (!unauthorized) {
       const authStore = useAuthStore();
-      //
+      const result = await authStore.refreshToken();
+      if (!result) {
+        authStore.logout();
+      }
     }
-
-    // take action accordingly...
   });
 });

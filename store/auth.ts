@@ -133,10 +133,29 @@ export const useAuthStore = defineStore('signup', () => {
     }
   };
 
+  // 토큰 갱신
+  const refreshToken = async () => {
+    const { getToken } = useAuth();
+    const { access_token, refresh_token } = getToken();
+    if (!access_token || !refresh_token) return false;
+    useGqlToken(null);
+    const data = await GqlInstance('RefreshToken', {
+      token: { access_token, refresh_token },
+    });
+    if (data.refreshToken?.success && data.refreshToken.token) {
+      setToken(data.refreshToken.token);
+      useGqlToken(data.refreshToken.token.access_token);
+      return true;
+    }
+    return false;
+  };
+
   // 로그아웃
   const logout = async () => {
     removeToken();
     useGqlToken(null);
+    const router = useRouter();
+    router.push('/login');
   };
 
   const actions = {
@@ -147,6 +166,7 @@ export const useAuthStore = defineStore('signup', () => {
     getSigninUrlForKakao,
     signinForKakao,
     verifyToken,
+    refreshToken,
     logout,
   };
   return {

@@ -17,3 +17,15 @@ query VerifyToken {
     message
   }
 }
+
+# 토큰 갱신
+query RefreshToken($token: TokenInput!) {
+  refreshToken(token: $token) {
+    success
+    message
+    token {
+      access_token
+      refresh_token
+    }
+  }
+}
