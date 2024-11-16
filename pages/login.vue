@@ -73,6 +73,7 @@ const kakaoLogin = async () => {
         outlined
         type="password"
         :rules="[(v) => !!v || '비밀번호를 입력해주세요.']"
+        @keyup.enter="emailLogin"
       />
 
       <v-btn
