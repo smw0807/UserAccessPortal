@@ -23,7 +23,7 @@ const showDrawer = ref(false);
 const drawer = ref(null);
 const links = [
   ['mdi-home', '홈', '/'],
-  ['mdi-account-multiple', '회원관리', '/users'],
+  ['mdi-account-multiple', '회원관리', '/manage/users'],
 ];
 
 onMounted(async () => {
