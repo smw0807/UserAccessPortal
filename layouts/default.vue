@@ -11,9 +11,7 @@ if (!hasToken()) {
 const userStore = useUserStore();
 
 const isAdmin = await userStore.checkAdminUser();
-if (isAdmin) {
-  router.replace('/');
-} else {
+if (!isAdmin) {
   router.replace('/user');
 }
 
@@ -36,13 +34,13 @@ onMounted(async () => {
   <Confirm />
   <v-app id="inspire">
     <v-navigation-drawer v-if="showDrawer" v-model="drawer">
-      <v-sheet class="pa-4">
-        <v-avatar class="mb-4" color="grey-darken-1" size="64">
+      <v-sheet class="pa-4 d-flex flex-column align-center justify-center">
+        <v-avatar class="mb-4" color="grey-darken-1" size="50%">
           <v-img
             v-if="cUserInfo?.profileImage"
             :src="cUserInfo?.profileImage"
           />
-          <v-icon v-else size="64">mdi-account</v-icon>
+          <v-icon v-else size="50%">mdi-account</v-icon>
         </v-avatar>
 
         <div class="text-h6">{{ cUserInfo?.email }}</div>
