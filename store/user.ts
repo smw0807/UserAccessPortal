@@ -1,9 +1,13 @@
+import type { FindAllUsersQuery, UserSearchInput } from '#gql';
+
 export const useUserStore = defineStore('user', () => {
   const { useAlert, useConfirm } = useDialog();
   const GqlInstance = useGql();
+  type FindAllUsersQueryType = FindAllUsersQuery['findAllUsers'];
   // ============= STATE =============
   const userInfo = ref();
-  const state = { userInfo };
+  const users = ref<FindAllUsersQueryType['users']>();
+  const state = { userInfo, users };
 
   // ============= ACTIONS =============
   // 관리자 여부 체크
@@ -22,6 +26,18 @@ export const useUserStore = defineStore('user', () => {
       const data = await GqlInstance('FindUserByEmail', {});
       if (data.findUserByEmail?.success) {
         userInfo.value = data.findUserByEmail?.user;
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  // 회원 목록 조회
+  const findAllUsers = async (filter: UserSearchInput) => {
+    try {
+      const data = await GqlInstance('FindAllUsers', { filter });
+      if (data.findAllUsers?.success && data.findAllUsers?.users) {
+        users.value = data.findAllUsers.users;
       }
     } catch (e) {
       console.error(e);
@@ -63,6 +79,7 @@ export const useUserStore = defineStore('user', () => {
 
   const actions = {
     checkAdminUser,
+    findAllUsers,
     getUserInfo,
     savePhoneNumber,
   };
