@@ -48,3 +48,24 @@ mutation SavePhoneNumber($phoneNumber: String!) {
     message
   }
 }
+
+# 회원 목록 조회
+query FindAllUsers($filter: UserSearchInput!) {
+  findAllUsers(filter: $filter) {
+    success
+    message
+    totalCount
+    users {
+      id
+      email
+      name
+      type
+      role
+      lastLoginAt
+      profileImage
+      phoneNumber
+      createdAt
+      updatedAt
+    }
+  }
+}
