@@ -1,4 +1,4 @@
 <script setup lang="ts"></script>
 <template>
-  <v-card> gdgd </v-card>
+  <h1>홈</h1>
 </template>
