@@ -34,7 +34,6 @@ onMounted(async () => {
     pageIndex: pageIndex.value,
     keyword: keyword.value,
   });
-  console.log(cUsers.value);
 });
 </script>
 <template>
