@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Alert from '~/components/dialog/Alert.vue';
 import Confirm from '~/components/dialog/Confirm.vue';
+import { useAuthStore } from '~/store/auth';
 import { useUserStore } from '~/store/user';
 const { hasToken } = useAuth();
 const router = useRouter();
@@ -24,6 +25,11 @@ const links = [
   ['mdi-account-multiple', '회원관리', '/manage/users'],
 ];
 
+const authStore = useAuthStore();
+const logout = () => {
+  authStore.logout();
+};
+
 onMounted(async () => {
   showDrawer.value = true;
   await userStore.getUserInfo();
@@ -40,7 +46,7 @@ onMounted(async () => {
             v-if="cUserInfo?.profileImage"
             :src="cUserInfo?.profileImage"
           />
-          <v-icon v-else size="50%">mdi-account</v-icon>
+          <v-icon v-else size="100">mdi-account</v-icon>
         </v-avatar>
 
         <div class="text-h6">{{ cUserInfo?.email }}</div>
@@ -58,6 +64,18 @@ onMounted(async () => {
           :to="link"
         ></v-list-item>
       </v-list>
+
+      <!-- 로그아웃 -->
+      <template #append>
+        <v-divider />
+        <v-list>
+          <v-list-item
+            prepend-icon="mdi-logout"
+            title="로그아웃"
+            @click="logout"
+          />
+        </v-list>
+      </template>
     </v-navigation-drawer>
 
     <v-main>
