@@ -14,6 +14,7 @@ const headers = ref([
   { title: '이름', key: 'name' },
   { title: '휴대폰번호', key: 'phoneNumber' },
   { title: '권한', key: 'role' },
+  { title: '상태', key: 'status' },
   { title: '생성일', key: 'createdAt' },
   { title: '수정일', key: 'updatedAt' },
   { title: '마지막 로그인일', key: 'lastLoginAt' },
@@ -49,6 +50,24 @@ onMounted(async () => {
           </v-chip>
           <v-chip v-else-if="item.role === 'USER'" color="secondary" label>
             일반회원
+          </v-chip>
+          <v-chip v-else color="error" label>-</v-chip>
+        </template>
+        <!-- 상태 맵핑 -->
+        <template #item.status="{ item }">
+          <v-chip
+            v-if="item.status === 'ACTIVE'"
+            color="success"
+            variant="flat"
+          >
+            활성화
+          </v-chip>
+          <v-chip
+            v-else-if="item.status === 'INACTIVE'"
+            color="error"
+            variant="flat"
+          >
+            비활성화
           </v-chip>
           <v-chip v-else color="error" label>-</v-chip>
         </template>

@@ -61,6 +61,7 @@ query FindAllUsers($filter: UserSearchInput!) {
       name
       type
       role
+      status
       lastLoginAt
       profileImage
       phoneNumber
