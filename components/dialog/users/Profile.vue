@@ -131,11 +131,11 @@ const savePhoneNumber = (phoneNumber: string) => {
             <v-list-item-subtitle>{{ lastLogin }}</v-list-item-subtitle>
           </v-list-item>
         </v-list>
+        <v-divider class="mt-4" />
       </v-card-text>
-      <v-divider />
       <template #actions>
         <v-card-actions class="justify-end">
-          <slot />
+          <slot name="actions" />
         </v-card-actions>
       </template>
     </v-card>

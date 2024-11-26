@@ -33,7 +33,9 @@ onMounted(async () => {
     @save-phone-number="savePhoneNumber"
   >
     <template #actions>
-      <v-btn color="error" variant="tonal" @click="logout">로그아웃</v-btn>
+      <v-btn color="error" size="x-large" variant="flat" block @click="logout">
+        로그아웃
+      </v-btn>
     </template>
   </dialog-users-profile>
 </template>
