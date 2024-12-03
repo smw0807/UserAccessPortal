@@ -63,7 +63,7 @@ export const useAuthStore = defineStore('signup', () => {
   // 구글 로그인 URL 조회
   const getSigninUrlForGoogle = async () => {
     try {
-      const { data } = await useFetchAPI('/api/auth/signin/google');
+      const { data } = await useFetchAPI('/api/auth/google/signin');
       return data.value;
     } catch (e) {
       console.error(e);
@@ -72,7 +72,7 @@ export const useAuthStore = defineStore('signup', () => {
   // 구글 로그인 인증
   const signinForGoogle = async (code: string) => {
     try {
-      const { data, error } = await useFetchAPI('/api/auth/callback/google', {
+      const { data, error } = await useFetchAPI('/api/auth/google/callback', {
         query: { code },
       });
       if (error.value) {
@@ -91,7 +91,7 @@ export const useAuthStore = defineStore('signup', () => {
   // 카카오 로그인 URL 조회
   const getSigninUrlForKakao = async () => {
     try {
-      const { data } = await useFetchAPI('/api/auth/signin/kakao');
+      const { data } = await useFetchAPI('/api/auth/kakao/signin');
       console.log('data : ', data);
       return data.value;
     } catch (e) {
@@ -101,7 +101,7 @@ export const useAuthStore = defineStore('signup', () => {
   // 카카오 로그인 인증
   const signinForKakao = async (code: string) => {
     try {
-      const { data, error } = await useFetchAPI('/api/auth/callback/kakao', {
+      const { data, error } = await useFetchAPI('/api/auth/kakao/callback', {
         query: { code },
       });
       if (error.value) {
