@@ -41,20 +41,39 @@ export const useAuthStore = defineStore('signup', () => {
   // 이메일 로그인
   const signinForEmail = async (email: string, password: string) => {
     try {
-      const data = await GqlInstance('EmailSignIn', { email, password });
-      if (!data.emailSignIn?.success) {
+      const { data, error } = await useFetchAPI('/api/auth/login', {
+        method: 'POST',
+        body: {
+          email,
+          password,
+        },
+      });
+      if (error.value) {
         useAlert({
           title: '로그인에 실패했습니다.',
           type: 'error',
-          message: data.emailSignIn?.message,
+          message: error.value.data.message,
         });
         return false;
       }
-      if (data.emailSignIn?.success && data.emailSignIn.token) {
-        setToken(data.emailSignIn.token);
-        useGqlToken(data.emailSignIn?.token.access_token);
-      }
+      const { token } = data.value;
+      setToken(token);
+      useGqlToken(token.access_token);
       return true;
+      // const data = await GqlInstance('EmailSignIn', { email, password });
+      // if (!data.emailSignIn?.success) {
+      //   useAlert({
+      //     title: '로그인에 실패했습니다.',
+      //     type: 'error',
+      //     message: data.emailSignIn?.message,
+      //   });
+      //   return false;
+      // }
+      // if (data.emailSignIn?.success && data.emailSignIn.token) {
+      //   setToken(data.emailSignIn.token);
+      //   useGqlToken(data.emailSignIn?.token.access_token);
+      // }
+      // return true;
     } catch (e) {
       console.error(e);
     }
@@ -120,7 +139,6 @@ export const useAuthStore = defineStore('signup', () => {
   const verifyToken = async () => {
     try {
       const data = await GqlInstance('VerifyToken', {});
-      console.log('data: ', data);
       return data.verifyToken?.success;
     } catch (e) {
       console.error(e);
