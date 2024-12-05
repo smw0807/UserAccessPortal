@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 
 const props = defineProps<{
   modelValue: boolean;
-  user: FindAllUsersQuery['findAllUsers']['users'];
+  user?: FindAllUsersQuery['findAllUsers']['users'];
 }>();
 const emit = defineEmits(['update:modelValue', 'savePhoneNumber']);
 const cUser = computed(() => props.user);

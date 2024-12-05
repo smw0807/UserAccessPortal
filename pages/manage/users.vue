@@ -1,13 +1,17 @@
 <script setup lang="ts">
 import { useUserStore } from '~/store/user';
 import dayjs from 'dayjs';
+import type { FindAllUsersQuery } from '#gql';
 
 const userStore = useUserStore();
 const pageSize = ref(10);
-const pageIndex = ref(0);
+const pageIndex = ref(1);
 const keyword = ref('');
 
+// 회원 목록
 const cUsers = computed(() => userStore.users);
+
+// 테이블 헤더
 const headers = ref([
   { title: '회원타입', key: 'type' },
   { title: '이메일', key: 'email' },
@@ -20,6 +24,7 @@ const headers = ref([
   { title: '마지막 로그인일', key: 'lastLoginAt' },
 ]);
 
+// 페이지 클릭 이벤트
 const onPageClick = (page: number) => {
   pageIndex.value = page;
   userStore.findAllUsers({
@@ -27,6 +32,14 @@ const onPageClick = (page: number) => {
     pageIndex: pageIndex.value,
     keyword: keyword.value,
   });
+};
+
+// 회원 상세 정보 및 수정 다이얼로그
+const dialogProfile = ref(false);
+const selectUser = ref<FindAllUsersQuery['findAllUsers']['users']>();
+const editUser = async (email: string) => {
+  selectUser.value = await userStore.findUserByEmail(email);
+  dialogProfile.value = true;
 };
 
 onMounted(async () => {
@@ -39,10 +52,23 @@ onMounted(async () => {
 </script>
 <template>
   <h1>회원관리</h1>
+  <dialog-users-profile v-model="dialogProfile" :user="selectUser">
+    <template #actions>
+      <v-btn @click="dialogProfile = false">닫기</v-btn>
+    </template>
+  </dialog-users-profile>
   <v-card flat>
-    <v-card-title>회원목록</v-card-title>
     <v-card-text>
       <v-data-table :headers="headers" :items="cUsers" hide-default-footer>
+        <!-- 상세보기 -->
+        <template #item.email="{ item }">
+          <div
+            class="cursor-pointer text-primary"
+            @click="editUser(item.email)"
+          >
+            {{ item.email }}
+          </div>
+        </template>
         <!-- 권한 맵핑 -->
         <template #item.role="{ item }">
           <v-chip v-if="item.role === 'ADMIN'" color="primary" label>

@@ -32,6 +32,19 @@ export const useUserStore = defineStore('user', () => {
     }
   };
 
+  // 회원 상세 정보 조회
+  const findUserByEmail = async (email: string) => {
+    try {
+      const data = await GqlInstance('FindUserByEmail', { email });
+      if (data.findUserByEmail?.success && data.findUserByEmail?.user) {
+        return data.findUserByEmail.user;
+      }
+      return null;
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   // 회원 목록 조회
   const findAllUsers = async (filter: UserSearchInput) => {
     try {
@@ -80,6 +93,7 @@ export const useUserStore = defineStore('user', () => {
   const actions = {
     checkAdminUser,
     findAllUsers,
+    findUserByEmail,
     getUserInfo,
     savePhoneNumber,
   };
