@@ -8,7 +8,7 @@ const store = useUserStore();
 const authStore = useAuthStore();
 const cUser = computed(() => store.userInfo);
 
-const dialogProfile = ref(true);
+const dialogProfile = ref(false);
 
 const dialogPhoneNumber = ref(false);
 const savePhoneNumber = async (phoneNumber: string) => {
@@ -24,6 +24,7 @@ const logout = () => {
 
 onMounted(async () => {
   await store.getUserInfo();
+  dialogProfile.value = true;
 });
 </script>
 <template>
