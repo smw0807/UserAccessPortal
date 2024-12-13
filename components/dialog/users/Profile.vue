@@ -41,6 +41,7 @@ const lastLogin = computed(() => {
 const dialogPhoneNumber = ref(false);
 const savePhoneNumber = (phoneNumber: string) => {
   emit('savePhoneNumber', phoneNumber);
+  dialogPhoneNumber.value = false;
 };
 </script>
 <template>
