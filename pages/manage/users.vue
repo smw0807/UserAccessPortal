@@ -8,6 +8,8 @@ const pageSize = ref(10);
 const pageIndex = ref(1);
 const keyword = ref('');
 
+const showTable = ref(false);
+
 // 회원 목록
 const cUsers = computed(() => userStore.users);
 
@@ -43,6 +45,7 @@ const editUser = async (email: string) => {
 };
 
 onMounted(async () => {
+  showTable.value = true;
   await userStore.findAllUsers({
     pageSize: pageSize.value,
     pageIndex: pageIndex.value,
@@ -57,7 +60,7 @@ onMounted(async () => {
       <v-btn @click="dialogProfile = false">닫기</v-btn>
     </template>
   </dialog-users-profile>
-  <v-card flat>
+  <v-card flat v-if="showTable">
     <v-card-text>
       <v-data-table :headers="headers" :items="cUsers" hide-default-footer>
         <!-- 상세보기 -->
