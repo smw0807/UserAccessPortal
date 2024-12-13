@@ -42,8 +42,8 @@ query CheckAdminUser {
 }
 
 # 휴대폰 번호 수정
-mutation SavePhoneNumber($phoneNumber: String!) {
-  savePhoneNumber(phoneNumber: $phoneNumber) {
+mutation SavePhoneNumber($phoneNumber: String!, $email: String) {
+  savePhoneNumber(phoneNumber: $phoneNumber, email: $email) {
     success
     message
   }

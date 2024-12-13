@@ -2,8 +2,10 @@
 import { useUserStore } from '~/store/user';
 import dayjs from 'dayjs';
 import type { FindAllUsersQuery } from '#gql';
+import { useManageStore } from '~/store/manage';
 
 const userStore = useUserStore();
+const manageStore = useManageStore();
 const pageSize = ref(10);
 const pageIndex = ref(1);
 const keyword = ref('');
@@ -26,6 +28,15 @@ const headers = ref([
   { title: '마지막 로그인일', key: 'lastLoginAt' },
 ]);
 
+// 회원 목록 조회
+const findAllUsers = async () => {
+  await userStore.findAllUsers({
+    pageSize: pageSize.value,
+    pageIndex: pageIndex.value,
+    keyword: keyword.value,
+  });
+};
+
 // 페이지 클릭 이벤트
 const onPageClick = (page: number) => {
   pageIndex.value = page;
@@ -44,18 +55,29 @@ const editUser = async (email: string) => {
   dialogProfile.value = true;
 };
 
-onMounted(async () => {
+const savePhoneNumber = async (phoneNumber: string) => {
+  const result = await manageStore.savePhoneNumber(
+    phoneNumber,
+    selectUser.value?.email
+  );
+  if (result) {
+    await editUser(selectUser.value?.email);
+    await findAllUsers();
+  }
+};
+
+onMounted(() => {
   showTable.value = true;
-  await userStore.findAllUsers({
-    pageSize: pageSize.value,
-    pageIndex: pageIndex.value,
-    keyword: keyword.value,
-  });
+  findAllUsers();
 });
 </script>
 <template>
   <h1>회원관리</h1>
-  <dialog-users-profile v-model="dialogProfile" :user="selectUser">
+  <dialog-users-profile
+    v-model="dialogProfile"
+    :user="selectUser"
+    @savePhoneNumber="savePhoneNumber"
+  >
     <template #actions>
       <v-btn @click="dialogProfile = false">닫기</v-btn>
     </template>

@@ -17,6 +17,7 @@ const confirm = async () => {
   const { valid } = await form.value.validate();
   if (valid) {
     emit('phoneNumber', phoneNumber.value);
+    phoneNumber.value = '';
   }
 };
 </script>

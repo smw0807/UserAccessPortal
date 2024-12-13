@@ -68,7 +68,9 @@ export const useUserStore = defineStore('user', () => {
       if (!confirm) {
         return;
       }
-      const data = await GqlInstance('SavePhoneNumber', { phoneNumber });
+      const data = await GqlInstance('SavePhoneNumber', {
+        phoneNumber,
+      });
       if (data.savePhoneNumber?.success) {
         useAlert({
           type: 'success',
