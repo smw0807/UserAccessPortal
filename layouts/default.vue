@@ -19,7 +19,6 @@ if (!isAdmin) {
 const cUserInfo = computed(() => userStore.userInfo);
 
 const showDrawer = ref(false);
-const drawer = ref(null);
 const links = [
   ['mdi-home', '홈', '/'],
   ['mdi-account-multiple', '회원관리', '/manage/users'],
@@ -39,7 +38,13 @@ onMounted(async () => {
   <Alert />
   <Confirm />
   <v-app id="inspire">
-    <v-navigation-drawer v-if="showDrawer" v-model="drawer">
+    <v-app-bar>
+      <v-app-bar-nav-icon
+        @click="showDrawer = !showDrawer"
+        permanent
+      ></v-app-bar-nav-icon>
+    </v-app-bar>
+    <v-navigation-drawer v-model="showDrawer" expand-on-hover>
       <v-sheet class="pa-4 d-flex flex-column align-center justify-center">
         <v-avatar class="mb-4" color="grey-darken-1" size="50%">
           <v-img
