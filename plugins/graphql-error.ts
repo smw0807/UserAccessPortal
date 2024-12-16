@@ -32,6 +32,7 @@ export default defineNuxtPlugin(() => {
     });
 
     if (!unauthorized) {
+      console.log('Token Refresh !!!');
       const authStore = useAuthStore();
       const result = await authStore.refreshToken();
       if (!result) {
