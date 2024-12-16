@@ -1,11 +1,11 @@
 <script setup lang="ts">
 const props = defineProps<{
   modelValue: boolean;
-  item: any;
+  value: string;
 }>();
-const emit = defineEmits(['update:modelValue', 'update:status']);
+const emit = defineEmits(['update:modelValue', 'update:value']);
 
-const selectedStatus = ref('');
+const selectedStatus = ref(props.value);
 
 const statusItems = ref([
   { value: 'ACTIVE', label: '활성화' },
@@ -13,27 +13,16 @@ const statusItems = ref([
 ]);
 
 const updateStatus = () => {
-  emit('update:status', {
-    email: props.item.email,
-    status: selectedStatus.value,
-  });
+  emit('update:value', selectedStatus.value);
   emit('update:modelValue', false);
 };
 </script>
 <template>
   <v-btn @click="emit('update:modelValue', true)" variant="text">
-    <v-chip
-      v-if="props.item.status === 'ACTIVE'"
-      color="success"
-      variant="flat"
-    >
+    <v-chip v-if="value === 'ACTIVE'" color="success" variant="flat">
       활성화
     </v-chip>
-    <v-chip
-      v-else-if="props.item.status === 'INACTIVE'"
-      color="error"
-      variant="flat"
-    >
+    <v-chip v-else-if="value === 'INACTIVE'" color="error" variant="flat">
       비활성화
     </v-chip>
     <v-chip v-else color="error" label>-</v-chip>

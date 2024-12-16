@@ -68,8 +68,8 @@ const savePhoneNumber = async (phoneNumber: string) => {
 
 // 상태 변경 컴포넌트
 const dialogStatus = ref(false);
-const updateStatus = async (email: string) => {
-  console.log(email);
+const updateStatus = async (email: string, status: string) => {
+  console.log(email, status);
 };
 
 onMounted(() => {
@@ -114,8 +114,8 @@ onMounted(() => {
         <template #item.status="{ item }">
           <dialog-users-edit-status
             v-model="dialogStatus"
-            :item="item"
-            @update:status="updateStatus"
+            :value="item.status"
+            @update:value="updateStatus(item.email, $event)"
           />
         </template>
         <!-- 생성일 포맷 -->
