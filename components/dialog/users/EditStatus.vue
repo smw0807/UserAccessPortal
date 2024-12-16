@@ -5,7 +5,6 @@ const props = defineProps<{
 }>();
 const emit = defineEmits(['update:modelValue', 'update:status']);
 
-const item = props.item;
 const selectedStatus = ref('');
 
 const statusItems = ref([
@@ -20,11 +19,6 @@ const updateStatus = () => {
   });
   emit('update:modelValue', false);
 };
-
-onMounted(() => {
-  console.log(item.email, item.status);
-  selectedStatus.value = props.item.status;
-});
 </script>
 <template>
   <v-btn @click="emit('update:modelValue', true)" variant="text">
@@ -52,7 +46,6 @@ onMounted(() => {
         item-value="value"
         item-title="label"
       />
-      {{ selectedStatus }}
       <template v-slot:actions>
         <v-btn
           class="ms-auto"
