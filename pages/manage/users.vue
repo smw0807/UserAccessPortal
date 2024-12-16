@@ -66,6 +66,12 @@ const savePhoneNumber = async (phoneNumber: string) => {
   }
 };
 
+// 상태 변경 컴포넌트
+const dialogStatus = ref(false);
+const updateStatus = async (email: string) => {
+  console.log(email);
+};
+
 onMounted(() => {
   showTable.value = true;
   findAllUsers();
@@ -106,21 +112,11 @@ onMounted(() => {
         </template>
         <!-- 상태 맵핑 -->
         <template #item.status="{ item }">
-          <v-chip
-            v-if="item.status === 'ACTIVE'"
-            color="success"
-            variant="flat"
-          >
-            활성화
-          </v-chip>
-          <v-chip
-            v-else-if="item.status === 'INACTIVE'"
-            color="error"
-            variant="flat"
-          >
-            비활성화
-          </v-chip>
-          <v-chip v-else color="error" label>-</v-chip>
+          <dialog-users-edit-status
+            v-model="dialogStatus"
+            :item="item"
+            @update:status="updateStatus"
+          />
         </template>
         <!-- 생성일 포맷 -->
         <template #item.createdAt="{ item }">
