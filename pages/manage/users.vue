@@ -66,10 +66,19 @@ const savePhoneNumber = async (phoneNumber: string) => {
   }
 };
 
+const selectedRow = ref();
+
 // 상태 변경 컴포넌트
 const dialogStatus = ref(false);
-const updateStatus = async (email: string, status: string) => {
-  console.log(email, status);
+const statusHandler = (item: any) => {
+  selectedRow.value = item;
+  dialogStatus.value = true;
+};
+const updateStatus = (status: string) => {
+  console.log(status);
+  const email = selectedRow.value.email;
+  const test = status;
+  console.log(email, test);
 };
 
 onMounted(() => {
@@ -88,6 +97,11 @@ onMounted(() => {
       <v-btn @click="dialogProfile = false">닫기</v-btn>
     </template>
   </dialog-users-profile>
+  <dialog-users-edit-status
+    v-model="dialogStatus"
+    :value="selectedRow?.status"
+    @changeStatus="updateStatus"
+  />
   <v-card flat v-if="showTable">
     <v-card-text>
       <v-data-table :headers="headers" :items="cUsers" hide-default-footer>
@@ -112,11 +126,23 @@ onMounted(() => {
         </template>
         <!-- 상태 맵핑 -->
         <template #item.status="{ item }">
-          <dialog-users-edit-status
-            v-model="dialogStatus"
-            :value="item.status"
-            @update:value="updateStatus(item.email, $event)"
-          />
+          <v-btn @click="statusHandler(item)" variant="text">
+            <v-chip
+              v-if="item.status === 'ACTIVE'"
+              color="success"
+              variant="flat"
+            >
+              활성화
+            </v-chip>
+            <v-chip
+              v-else-if="item.status === 'INACTIVE'"
+              color="error"
+              variant="flat"
+            >
+              비활성화
+            </v-chip>
+            <v-chip v-else color="error" label>-</v-chip>
+          </v-btn>
         </template>
         <!-- 생성일 포맷 -->
         <template #item.createdAt="{ item }">
