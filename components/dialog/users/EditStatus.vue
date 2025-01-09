@@ -15,7 +15,16 @@ const statusItems = ref([
   { value: 'INACTIVE', label: '비활성화' },
 ]);
 
-const updateStatus = () => {
+const { useConfirm } = useDialog();
+const updateStatus = async () => {
+  const confirm = await useConfirm({
+    type: 'info',
+    title: '회원 상태 변경',
+    message: '회원 상태를 변경하시겠습니까?',
+  });
+  if (!confirm) {
+    return;
+  }
   emit('update:value', selectedStatus.value);
   handleClose();
 };

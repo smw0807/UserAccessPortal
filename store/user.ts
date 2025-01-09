@@ -92,12 +92,40 @@ export const useUserStore = defineStore('user', () => {
     }
   };
 
+  // 회원 상태 변경
+  const updateUserStatus = async (email: string, status: string) => {
+    try {
+      const data = await GqlInstance('UpdateUserStatus', {
+        email,
+        status,
+      });
+      if (data.updateUserStatus?.success) {
+        useAlert({
+          type: 'success',
+          title: '회원 상태 변경',
+          message: data.updateUserStatus.message,
+        });
+        return true;
+      }
+      useAlert({
+        type: 'error',
+        title: '회원 상태 변경',
+        message: data.updateUserStatus?.message,
+      });
+      return false;
+    } catch (e) {
+      console.error(e);
+      return false;
+    }
+  };
+
   const actions = {
     checkAdminUser,
     findAllUsers,
     findUserByEmail,
     getUserInfo,
     savePhoneNumber,
+    updateUserStatus,
   };
 
   return {

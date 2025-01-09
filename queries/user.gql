@@ -70,3 +70,11 @@ query FindAllUsers($filter: UserSearchInput!) {
     }
   }
 }
+
+# 회원 상태 변경
+mutation UpdateUserStatus($email: String!, $status: String!) {
+  updateUserStatus(email: $email, status: $status) {
+    success
+    message
+  }
+}

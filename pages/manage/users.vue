@@ -74,8 +74,11 @@ const statusHandler = (item: any) => {
   selectedRow.value = item;
   dialogStatus.value = true;
 };
-const updateStatus = (email: string, status: string) => {
-  console.log(email, status);
+const updateStatus = async (email: string, status: string) => {
+  const result = await userStore.updateUserStatus(email, status);
+  if (result) {
+    await findAllUsers();
+  }
 };
 
 onMounted(() => {
