@@ -1,19 +1,14 @@
 <script setup lang="ts">
 const props = defineProps<{
-  modelValue: boolean;
   value: string;
 }>();
-const emit = defineEmits(['update:modelValue', 'update:value', 'changeStatus']);
+const emit = defineEmits(['update:value']);
+const open = ref(false);
+
+const handleOpen = () => (open.value = true);
+const handleClose = () => (open.value = false);
 
 const selectedStatus = ref(props.value);
-const cSelectedStatus = computed({
-  get: () => props.value,
-  set: (value) => {
-    console.log('set : ', value);
-    emit('update:value', value);
-    return value;
-  },
-});
 
 const statusItems = ref([
   { value: 'ACTIVE', label: '활성화' },
@@ -21,16 +16,21 @@ const statusItems = ref([
 ]);
 
 const updateStatus = () => {
-  emit('changeStatus', selectedStatus.value);
-  emit('update:modelValue', false);
+  emit('update:value', selectedStatus.value);
+  handleClose();
 };
-
-watch(selectedStatus, (value) => {
-  console.log(value);
-});
 </script>
 <template>
-  <v-dialog v-model="props.modelValue" width="auto">
+  <v-btn @click="handleOpen" variant="text">
+    <v-chip v-if="value === 'ACTIVE'" color="success" variant="flat">
+      활성화
+    </v-chip>
+    <v-chip v-else-if="value === 'INACTIVE'" color="error" variant="flat">
+      비활성화
+    </v-chip>
+    <v-chip v-else color="error" label>-</v-chip>
+  </v-btn>
+  <v-dialog v-model="open" width="auto">
     <v-card class="pa-2" max-width="200" title="회원 상태 변경">
       <v-select
         v-model="selectedStatus"
@@ -38,7 +38,6 @@ watch(selectedStatus, (value) => {
         item-value="value"
         item-title="label"
       />
-      {{ selectedStatus }}
       <template v-slot:actions>
         <v-btn
           class="ms-auto"
@@ -51,7 +50,7 @@ watch(selectedStatus, (value) => {
           class="ms-auto"
           text="닫기"
           variant="flat"
-          @click="emit('update:modelValue', false)"
+          @click="handleClose"
         ></v-btn>
       </template>
     </v-card>
