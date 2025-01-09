@@ -66,14 +66,7 @@ const savePhoneNumber = async (phoneNumber: string) => {
   }
 };
 
-const selectedRow = ref();
-
 // 상태 변경 컴포넌트
-const dialogStatus = ref(false);
-const statusHandler = (item: any) => {
-  selectedRow.value = item;
-  dialogStatus.value = true;
-};
 const updateStatus = async (email: string, status: string) => {
   const result = await userStore.updateUserStatus(email, status);
   if (result) {
