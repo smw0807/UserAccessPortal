@@ -39,7 +39,7 @@ const lastLogin = computed(() => {
 });
 
 const dialogPhoneNumber = ref(false);
-const savePhoneNumber = (phoneNumber: string) => {
+const savePhoneNumber = async (phoneNumber: string) => {
   emit('savePhoneNumber', phoneNumber);
   dialogPhoneNumber.value = false;
 };

@@ -13,9 +13,18 @@ const form = ref();
 const { phoneNumber: phoneNumberRules } = useRules();
 const phoneNumber = ref('');
 
+const { useConfirm } = useDialog();
 const confirm = async () => {
   const { valid } = await form.value.validate();
   if (valid) {
+    const confirm = await useConfirm({
+      type: 'info',
+      title: '휴대폰 번호 수정',
+      message: '휴대폰 번호를 수정하시겠습니까?',
+    });
+    if (!confirm) {
+      return;
+    }
     emit('phoneNumber', phoneNumber.value);
     phoneNumber.value = '';
   }
