@@ -66,7 +66,15 @@ const savePhoneNumber = async (phoneNumber: string) => {
   }
 };
 
-// 상태 변경 컴포넌트
+// 권한 변경
+const updateRole = async (email: string, role: string) => {
+  const result = await userStore.updateUserRole(email, role);
+  if (result) {
+    await findAllUsers();
+  }
+};
+
+// 상태 변경
 const updateStatus = async (email: string, status: string) => {
   const result = await userStore.updateUserStatus(email, status);
   if (result) {
@@ -105,13 +113,10 @@ onMounted(() => {
         </template>
         <!-- 권한 맵핑 -->
         <template #item.role="{ item }">
-          <v-chip v-if="item.role === 'ADMIN'" color="primary" label>
-            관리자
-          </v-chip>
-          <v-chip v-else-if="item.role === 'USER'" color="secondary" label>
-            일반회원
-          </v-chip>
-          <v-chip v-else color="error" label>-</v-chip>
+          <dialog-users-edit-role
+            :value="item.role"
+            @update:value="updateRole(item.email, $event)"
+          />
         </template>
         <!-- 상태 맵핑 -->
         <template #item.status="{ item }">

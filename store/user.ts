@@ -119,6 +119,33 @@ export const useUserStore = defineStore('user', () => {
     }
   };
 
+  // 회원 권한 변경
+  const updateUserRole = async (email: string, role: string) => {
+    try {
+      const data = await GqlInstance('UpdateUserRole', {
+        email,
+        role,
+      });
+      if (data.updateUserRole?.success) {
+        useAlert({
+          type: 'success',
+          title: '회원 권한 변경',
+          message: data.updateUserRole.message,
+        });
+        return true;
+      }
+      useAlert({
+        type: 'error',
+        title: '회원 권한 변경',
+        message: data.updateUserRole?.message,
+      });
+      return false;
+    } catch (e) {
+      console.error(e);
+      return false;
+    }
+  };
+
   const actions = {
     checkAdminUser,
     findAllUsers,
@@ -126,6 +153,7 @@ export const useUserStore = defineStore('user', () => {
     getUserInfo,
     savePhoneNumber,
     updateUserStatus,
+    updateUserRole,
   };
 
   return {
