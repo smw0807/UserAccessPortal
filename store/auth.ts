@@ -60,20 +60,6 @@ export const useAuthStore = defineStore('signup', () => {
       setToken(token);
       useGqlToken(token.access_token);
       return true;
-      // const data = await GqlInstance('EmailSignIn', { email, password });
-      // if (!data.emailSignIn?.success) {
-      //   useAlert({
-      //     title: '로그인에 실패했습니다.',
-      //     type: 'error',
-      //     message: data.emailSignIn?.message,
-      //   });
-      //   return false;
-      // }
-      // if (data.emailSignIn?.success && data.emailSignIn.token) {
-      //   setToken(data.emailSignIn.token);
-      //   useGqlToken(data.emailSignIn?.token.access_token);
-      // }
-      // return true;
     } catch (e) {
       console.error(e);
     }
