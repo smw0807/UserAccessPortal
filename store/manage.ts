@@ -9,14 +9,6 @@ export const useManageStore = defineStore('manageStore', () => {
   // 회원 휴대폰 번호 수정
   const savePhoneNumber = async (phoneNumber: string, email: string) => {
     try {
-      const confirm = await useConfirm({
-        type: 'info',
-        title: '휴대폰 번호 수정',
-        message: '휴대폰 번호를 수정하시겠습니까?',
-      });
-      if (!confirm) {
-        return;
-      }
       const data = await GqlInstance('SavePhoneNumber', { phoneNumber, email });
       if (data.savePhoneNumber) {
         if (data.savePhoneNumber.success) {
@@ -40,10 +32,60 @@ export const useManageStore = defineStore('manageStore', () => {
     }
   };
 
-  // 회원 권한 수정
+  // 회원 상태 변경
+  const updateUserStatus = async (email: string, status: string) => {
+    try {
+      const data = await GqlInstance('UpdateUserStatus', {
+        email,
+        status,
+      });
+      if (data.updateUserStatus?.success) {
+        useAlert({
+          type: 'success',
+          title: '회원 상태 변경',
+          message: data.updateUserStatus.message,
+        });
+        return true;
+      }
+      useAlert({
+        type: 'error',
+        title: '회원 상태 변경',
+        message: data.updateUserStatus?.message,
+      });
+      return false;
+    } catch (e) {
+      console.error(e);
+      return false;
+    }
+  };
 
-  // 회원 상태 수정
-  const actions = { savePhoneNumber };
+  // 회원 권한 변경
+  const updateUserRole = async (email: string, role: string) => {
+    try {
+      const data = await GqlInstance('UpdateUserRole', {
+        email,
+        role,
+      });
+      if (data.updateUserRole?.success) {
+        useAlert({
+          type: 'success',
+          title: '회원 권한 변경',
+          message: data.updateUserRole.message,
+        });
+        return true;
+      }
+      useAlert({
+        type: 'error',
+        title: '회원 권한 변경',
+        message: data.updateUserRole?.message,
+      });
+      return false;
+    } catch (e) {
+      console.error(e);
+      return false;
+    }
+  };
+  const actions = { savePhoneNumber, updateUserStatus, updateUserRole };
 
   return {
     ...state,

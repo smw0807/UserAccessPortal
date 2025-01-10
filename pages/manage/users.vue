@@ -68,7 +68,7 @@ const savePhoneNumber = async (phoneNumber: string) => {
 
 // 권한 변경
 const updateRole = async (email: string, role: string) => {
-  const result = await userStore.updateUserRole(email, role);
+  const result = await manageStore.updateUserRole(email, role);
   if (result) {
     await findAllUsers();
   }
@@ -76,7 +76,7 @@ const updateRole = async (email: string, role: string) => {
 
 // 상태 변경
 const updateStatus = async (email: string, status: string) => {
-  const result = await userStore.updateUserStatus(email, status);
+  const result = await manageStore.updateUserStatus(email, status);
   if (result) {
     await findAllUsers();
   }
