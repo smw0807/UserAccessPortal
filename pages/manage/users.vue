@@ -122,11 +122,11 @@ onMounted(() => {
         </template>
         <!-- 생성일 포맷 -->
         <template #item.createdAt="{ item }">
-          {{ dayjs(item.createdAt).format('YYYY-MM-DD HH:mm:ss') }}
+          {{ dayjs(item.createdAt).format('YYYY-MM-DD ') }}
         </template>
         <!-- 수정일 포맷 -->
         <template #item.updatedAt="{ item }">
-          {{ dayjs(item.updatedAt).format('YYYY-MM-DD HH:mm:ss') }}
+          {{ dayjs(item.updatedAt).format('YYYY-MM-DD') }}
         </template>
         <!-- 마지막 로그인일 포맷 -->
         <template #item.lastLoginAt="{ item }">
