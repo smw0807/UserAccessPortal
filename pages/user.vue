@@ -46,7 +46,14 @@ const savePhoneNumber = async (phoneNumber: string) => {
   }
 };
 
-const logout = () => {
+const { useConfirm } = useDialog();
+const logout = async () => {
+  const confirm = await useConfirm({
+    type: 'info',
+    title: '로그아웃',
+    message: '로그아웃 하시겠습니까?',
+  });
+  if (!confirm) return;
   authStore.logout();
 };
 
