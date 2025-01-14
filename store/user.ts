@@ -60,14 +60,6 @@ export const useUserStore = defineStore('user', () => {
   // 휴대폰 번호 수정
   const savePhoneNumber = async (phoneNumber: string) => {
     try {
-      const confirm = await useConfirm({
-        type: 'info',
-        title: '휴대폰 번호 수정',
-        message: '휴대폰 번호를 수정하시겠습니까?',
-      });
-      if (!confirm) {
-        return;
-      }
       const data = await GqlInstance('SavePhoneNumber', {
         phoneNumber,
       });
