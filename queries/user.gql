@@ -29,6 +29,18 @@ query FindUserByEmail($email: String) {
       phoneNumber
       createdAt
       updatedAt
+      point {
+        point
+        reason
+        createdAt
+        updatedAt
+        pointHistory {
+          point
+          reason
+          createdAt
+          updatedAt
+        }
+      }
     }
   }
 }
