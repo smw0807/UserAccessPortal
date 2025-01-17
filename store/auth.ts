@@ -69,7 +69,10 @@ export const useAuthStore = defineStore('signup', () => {
   const getSigninUrlForGoogle = async () => {
     try {
       const { data } = await useFetchAPI('/api/auth/google/signin');
-      return data.value;
+      if (data.value.success) {
+        return data.value.url;
+      }
+      return null;
     } catch (e) {
       console.error(e);
     }
@@ -97,8 +100,10 @@ export const useAuthStore = defineStore('signup', () => {
   const getSigninUrlForKakao = async () => {
     try {
       const { data } = await useFetchAPI('/api/auth/kakao/signin');
-      console.log('data : ', data);
-      return data.value;
+      if (data.value.success) {
+        return data.value.url;
+      }
+      return null;
     } catch (e) {
       console.error(e);
     }
