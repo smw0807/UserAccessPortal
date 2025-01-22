@@ -35,7 +35,9 @@ const updatedAt = computed(() => {
   return dayjs(cUser.value?.updatedAt).format('YYYY-MM-DD HH:mm');
 });
 const lastLogin = computed(() => {
-  return dayjs(cUser.value?.lastLoginAt).format('YYYY-MM-DD HH:mm:ss');
+  return cUser.value?.lastLoginAt
+    ? dayjs(cUser.value?.lastLoginAt).format('YYYY-MM-DD HH:mm:ss')
+    : '-';
 });
 
 const savePhoneNumber = async (phoneNumber: string) => {
@@ -129,7 +131,9 @@ const savePhoneNumber = async (phoneNumber: string) => {
               <v-icon>mdi-circle-multiple-outline</v-icon>
             </template>
             <v-list-item-title>포인트</v-list-item-title>
-            <v-list-item-subtitle>{{ cUser.point.point }}</v-list-item-subtitle>
+            <v-list-item-subtitle>{{
+              cUser.point?.point ?? '-'
+            }}</v-list-item-subtitle>
           </v-list-item>
         </v-list>
         <v-divider class="mt-4" />

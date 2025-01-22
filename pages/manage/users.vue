@@ -135,7 +135,10 @@ onMounted(() => {
         </template>
         <!-- 마지막 로그인일 포맷 -->
         <template #item.lastLoginAt="{ item }">
-          {{ dayjs(item.lastLoginAt).format('YYYY-MM-DD HH:mm:ss') }}
+          {{
+            item.lastLoginAt &&
+            dayjs(item.lastLoginAt).format('YYYY-MM-DD HH:mm:ss')
+          }}
         </template>
       </v-data-table>
       <v-pagination
