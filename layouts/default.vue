@@ -22,6 +22,7 @@ const showDrawer = ref(false);
 const links = [
   ['mdi-home', '홈', '/'],
   ['mdi-account-multiple', '회원관리', '/manage/users'],
+  ['mdi-history', '적립금 내역', '/manage/pointHistory'],
 ];
 
 const authStore = useAuthStore();
