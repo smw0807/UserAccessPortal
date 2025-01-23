@@ -15,6 +15,13 @@ query VerifyToken {
   verifyToken {
     success
     message
+    user {
+      id
+      email
+      name
+      type
+      role
+    }
   }
 }
 
