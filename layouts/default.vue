@@ -3,19 +3,8 @@ import Alert from '~/components/dialog/Alert.vue';
 import Confirm from '~/components/dialog/Confirm.vue';
 import { useAuthStore } from '~/store/auth';
 import { useUserStore } from '~/store/user';
-// const { hasToken } = useAuth();
-// const router = useRouter();
-// if (!hasToken()) {
-//   router.replace('/login');
-// }
-// 어드민 유저 체크
+
 const userStore = useUserStore();
-
-// const isAdmin = await userStore.checkAdminUser();
-// if (!isAdmin) {
-//   router.replace('/user');
-// }
-
 const cUserInfo = computed(() => userStore.userInfo);
 
 const showDrawer = ref(false);
