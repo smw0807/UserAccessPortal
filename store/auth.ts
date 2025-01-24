@@ -58,7 +58,6 @@ export const useAuthStore = defineStore('signup', () => {
       }
       const { token } = data.value;
       setToken(token);
-      useGqlToken(token.access_token);
       return true;
     } catch (e) {
       console.error(e);
@@ -88,7 +87,6 @@ export const useAuthStore = defineStore('signup', () => {
       }
       if (data.value) {
         setToken(data.value);
-        useGqlToken(data.value.access_token);
       }
     } catch (e) {
       console.error(e);
@@ -119,7 +117,6 @@ export const useAuthStore = defineStore('signup', () => {
       }
       if (data.value) {
         setToken(data.value);
-        useGqlToken(data.value.access_token);
       }
     } catch (e) {
       console.error(e);
@@ -130,7 +127,7 @@ export const useAuthStore = defineStore('signup', () => {
   const verifyToken = async () => {
     try {
       const data = await GqlInstance('VerifyToken', {});
-      return data.verifyToken?.success;
+      return data.verifyToken;
     } catch (e) {
       console.error(e);
     }
