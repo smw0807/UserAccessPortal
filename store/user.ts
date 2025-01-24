@@ -10,16 +10,6 @@ export const useUserStore = defineStore('user', () => {
   const state = { userInfo, users };
 
   // ============= ACTIONS =============
-  // 관리자 여부 체크
-  const checkAdminUser = async () => {
-    try {
-      const data = await GqlInstance('CheckAdminUser', {});
-      return data.checkAdminUser.success;
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
   // 사용자 정보 가져오기
   const getUserInfo = async () => {
     try {
@@ -85,7 +75,6 @@ export const useUserStore = defineStore('user', () => {
   };
 
   const actions = {
-    checkAdminUser,
     findAllUsers,
     findUserByEmail,
     getUserInfo,
