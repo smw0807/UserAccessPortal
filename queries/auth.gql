@@ -16,7 +16,6 @@ query VerifyToken {
     success
     message
     user {
-      id
       email
       name
       type
