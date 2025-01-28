@@ -31,8 +31,8 @@ const headers = ref([
 // 회원 목록 조회
 const findAllUsers = async () => {
   await userStore.findAllUsers({
-    pageSize: pageSize.value,
-    pageIndex: pageIndex.value,
+    page: pageIndex.value,
+    size: pageSize.value,
     keyword: keyword.value,
   });
 };
@@ -41,8 +41,8 @@ const findAllUsers = async () => {
 const onPageClick = (page: number) => {
   pageIndex.value = page;
   userStore.findAllUsers({
-    pageSize: pageSize.value,
-    pageIndex: pageIndex.value,
+    size: pageSize.value,
+    page: pageIndex.value,
     keyword: keyword.value,
   });
 };
