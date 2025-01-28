@@ -1,6 +1,15 @@
 <script setup lang="ts">
+export type AddUserType = {
+  email: string;
+  name: string;
+  phoneNumber: string;
+  role: string;
+  status: string;
+};
 import { roleItems, statusItems } from '~/constants/item';
-const emit = defineEmits(['addUser']);
+const emit = defineEmits<{
+  (e: 'addUser', user: AddUserType): void;
+}>();
 const open = ref(false);
 const handleOpen = () => (open.value = true);
 const handleClose = () => (open.value = false);
