@@ -11,7 +11,13 @@ const pageSize = ref(10);
 const pageIndex = ref(1);
 const keyword = ref('');
 
+const loading = ref(false);
+
 const showTable = ref(false);
+
+const onSearch = () => {
+  console.log('onSearch keyword', keyword.value);
+};
 
 // 회원 목록
 const cUsers = computed(() => userStore.users);
@@ -107,12 +113,29 @@ onMounted(() => {
       <v-btn @click="dialogProfile = false">닫기</v-btn>
     </template>
   </dialog-users-profile>
-  <v-row>
+  <v-row class="mb-0">
     <v-col>
       <h1>회원관리</h1>
     </v-col>
     <v-col class="d-flex justify-end">
       <dialog-manage-add-user @addUser="addUser" />
+    </v-col>
+  </v-row>
+  <v-row class="mb-1 mt-0">
+    <v-col class="d-flex justify-end">
+      <v-text-field
+        v-model="keyword"
+        :loading="loading"
+        max-width="400"
+        append-inner-icon="mdi-magnify"
+        density="compact"
+        label="이메일 또는 이름으로 검색"
+        variant="solo"
+        hide-details
+        single-line
+        @click:append-inner="onSearch"
+        @keyup.enter="onSearch"
+      ></v-text-field>
     </v-col>
   </v-row>
 
