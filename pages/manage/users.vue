@@ -13,10 +13,6 @@ const keyword = ref('');
 const loading = ref(false);
 const showTable = ref(false);
 
-const onSearch = () => {
-  findAllUsers();
-};
-
 // 회원 목록
 const cUsers = computed(() => userStore.users);
 
@@ -133,15 +129,20 @@ onMounted(() => {
         variant="solo"
         hide-details
         single-line
-        @click:append-inner="onSearch"
-        @keyup.enter="onSearch"
+        @click:append-inner="findAllUsers"
+        @keyup.enter="findAllUsers"
       ></v-text-field>
     </v-col>
   </v-row>
 
   <v-card flat v-if="showTable">
     <v-card-text>
-      <v-data-table :headers="headers" :items="cUsers" hide-default-footer>
+      <v-data-table
+        :headers="headers"
+        :items="cUsers"
+        :loading="loading"
+        hide-default-footer
+      >
         <!-- 상세보기 -->
         <template #item.email="{ item }">
           <div
