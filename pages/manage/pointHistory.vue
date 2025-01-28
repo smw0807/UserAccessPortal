@@ -8,6 +8,8 @@ const showTable = ref(false);
 // 적립금 내역 목록
 const page = computed(() => pointHistoryStore.page);
 const size = computed(() => pointHistoryStore.size);
+const keyword = ref('');
+const loading = ref(false);
 const pointHistoryList = computed(() => pointHistoryStore.pointHistoryList);
 const totalCount = computed(() => pointHistoryStore.totalCount);
 const pageLength = computed(() => Math.ceil(totalCount.value / size.value));
@@ -21,11 +23,13 @@ const headers = ref([
 ]);
 
 const findAllPointHistoryList = async () => {
+  loading.value = true;
   await pointHistoryStore.findAllPointHistoryList({
     page: page.value,
     size: size.value,
-    keyword: '',
+    keyword: keyword.value,
   });
+  loading.value = false;
 };
 const onPageClick = async (page: number) => {
   pointHistoryStore.page = page;
@@ -37,7 +41,26 @@ onMounted(async () => {
 });
 </script>
 <template>
-  <h1>적립금 내역 조회</h1>
+  <v-row>
+    <v-col>
+      <h1>적립금 내역 조회</h1>
+    </v-col>
+    <v-col class="d-flex justify-end">
+      <v-text-field
+        v-model="keyword"
+        :loading="loading"
+        max-width="400"
+        append-inner-icon="mdi-magnify"
+        density="compact"
+        label="이메일 또는 사유로 검색"
+        variant="solo"
+        hide-details
+        single-line
+        @click:append-inner="findAllPointHistoryList"
+        @keyup.enter="findAllPointHistoryList"
+      ></v-text-field>
+    </v-col>
+  </v-row>
   <v-card flat v-if="showTable">
     <v-card-text>
       <v-data-table
