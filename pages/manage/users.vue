@@ -88,7 +88,6 @@ onMounted(() => {
 });
 </script>
 <template>
-  <h1>회원관리</h1>
   <dialog-users-profile
     v-model="dialogProfile"
     :user="selectUser"
@@ -98,6 +97,14 @@ onMounted(() => {
       <v-btn @click="dialogProfile = false">닫기</v-btn>
     </template>
   </dialog-users-profile>
+  <v-row>
+    <v-col>
+      <h1>회원관리</h1>
+    </v-col>
+    <v-col class="d-flex justify-end">
+      <dialog-manage-add-user />
+    </v-col>
+  </v-row>
 
   <v-card flat v-if="showTable">
     <v-card-text>
