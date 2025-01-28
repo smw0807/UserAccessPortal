@@ -16,7 +16,7 @@ const loading = ref(false);
 const showTable = ref(false);
 
 const onSearch = () => {
-  console.log('onSearch keyword', keyword.value);
+  findAllUsers();
 };
 
 // 회원 목록
