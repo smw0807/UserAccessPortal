@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { statusItems } from '~/constants/item';
 const props = defineProps<{
   value: string;
 }>();
@@ -9,11 +10,6 @@ const handleOpen = () => (open.value = true);
 const handleClose = () => (open.value = false);
 
 const selectedStatus = ref(props.value);
-
-const statusItems = ref([
-  { value: 'ACTIVE', label: '활성화' },
-  { value: 'INACTIVE', label: '비활성화' },
-]);
 
 const { useConfirm } = useDialog();
 const updateStatus = async () => {

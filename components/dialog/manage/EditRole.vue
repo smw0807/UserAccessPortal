@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { roleItems } from '~/constants/item';
 const props = defineProps<{
   value: string;
 }>();
@@ -9,11 +10,6 @@ const handleOpen = () => (open.value = true);
 const handleClose = () => (open.value = false);
 
 const selectedRole = ref(props.value);
-
-const roleItems = ref([
-  { value: 'ADMIN', label: '관리자' },
-  { value: 'USER', label: '사용자' },
-]);
 
 const { useConfirm } = useDialog();
 const updateRole = async () => {
