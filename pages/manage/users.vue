@@ -120,14 +120,14 @@ onMounted(() => {
         </template>
         <!-- 권한 맵핑 -->
         <template #item.role="{ item }">
-          <dialog-users-edit-role
+          <dialog-manage-edit-role
             :value="item.role"
             @update:value="updateRole(item.email, $event)"
           />
         </template>
         <!-- 상태 맵핑 -->
         <template #item.status="{ item }">
-          <dialog-users-edit-status
+          <dialog-manage-edit-status
             :value="item.status"
             @update:value="updateStatus(item.email, $event)"
           />
