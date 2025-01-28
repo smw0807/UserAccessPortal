@@ -64,6 +64,7 @@ onMounted(async () => {
   <v-card flat v-if="showTable">
     <v-card-text>
       <v-data-table
+        :loading="loading"
         :headers="headers"
         :items="pointHistoryList"
         hide-default-footer
