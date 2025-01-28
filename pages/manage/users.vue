@@ -3,6 +3,7 @@ import { useUserStore } from '~/store/user';
 import dayjs from 'dayjs';
 import type { FindAllUsersQuery } from '#gql';
 import { useManageStore } from '~/store/manage';
+import type { AddUserType } from '~/components/dialog/manage/AddUser.vue';
 
 const userStore = useUserStore();
 const manageStore = useManageStore();
@@ -82,6 +83,15 @@ const updateStatus = async (email: string, status: string) => {
   }
 };
 
+// 회원 추가
+const addUser = async (user: AddUserType) => {
+  console.log('user', user);
+  // const result = await manageStore.addUser(user);
+  // if (result) {
+  //   await findAllUsers();
+  // }
+};
+
 onMounted(() => {
   showTable.value = true;
   findAllUsers();
@@ -102,7 +112,7 @@ onMounted(() => {
       <h1>회원관리</h1>
     </v-col>
     <v-col class="d-flex justify-end">
-      <dialog-manage-add-user />
+      <dialog-manage-add-user @addUser="addUser" />
     </v-col>
   </v-row>
 
