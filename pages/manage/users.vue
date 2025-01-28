@@ -10,9 +10,7 @@ const manageStore = useManageStore();
 const pageSize = ref(10);
 const pageIndex = ref(1);
 const keyword = ref('');
-
 const loading = ref(false);
-
 const showTable = ref(false);
 
 const onSearch = () => {
@@ -37,11 +35,13 @@ const headers = ref([
 
 // 회원 목록 조회
 const findAllUsers = async () => {
+  loading.value = true;
   await userStore.findAllUsers({
     page: pageIndex.value,
     size: pageSize.value,
     keyword: keyword.value,
   });
+  loading.value = false;
 };
 
 // 페이지 클릭 이벤트
