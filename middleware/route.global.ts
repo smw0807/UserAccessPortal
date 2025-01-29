@@ -40,7 +40,6 @@ export default defineNuxtRouteMiddleware(async (to) => {
       return navigateTo('/user');
     }
   }
-  console.log('accessTokenValid', accessTokenValid);
   // access_token 검증 실패 시 refresh_token 검증 및 갱신
   if (accessTokenValid && !accessTokenValid.success) {
     useGqlToken(null);
