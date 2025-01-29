@@ -1,3 +1,14 @@
+# 회원 추가
+mutation AddUser($input: AddUserInput!) {
+  addUser(input: $input) {
+    success
+    message
+    user {
+      email
+    }
+  }
+}
+
 # 회원 상태 변경
 mutation UpdateUserStatus($email: String!, $status: String!) {
   updateUserStatus(email: $email, status: $status) {

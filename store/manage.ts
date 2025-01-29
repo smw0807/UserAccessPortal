@@ -1,3 +1,5 @@
+import type { AddUserType } from '~/components/dialog/manage/AddUser.vue';
+
 export const useManageStore = defineStore('manageStore', () => {
   const { useAlert, useConfirm } = useDialog();
   const GqlInstance = useGql();
@@ -6,6 +8,31 @@ export const useManageStore = defineStore('manageStore', () => {
   const state = {};
 
   // ============= ACTIONS =============
+
+  // 회원 추가
+  const addUser = async (user: AddUserType) => {
+    try {
+      const data = await GqlInstance('AddUser', { input: user });
+      if (data.addUser?.success) {
+        useAlert({
+          type: 'success',
+          title: '회원 추가',
+          message: data.addUser.message,
+        });
+        return true;
+      }
+      useAlert({
+        type: 'error',
+        title: '회원 추가',
+        message: data.addUser?.message,
+      });
+      return false;
+    } catch (e) {
+      console.error(e);
+      return false;
+    }
+  };
+
   // 회원 휴대폰 번호 수정
   const savePhoneNumber = async (phoneNumber: string, email: string) => {
     try {
@@ -85,7 +112,12 @@ export const useManageStore = defineStore('manageStore', () => {
       return false;
     }
   };
-  const actions = { savePhoneNumber, updateUserStatus, updateUserRole };
+  const actions = {
+    addUser,
+    savePhoneNumber,
+    updateUserStatus,
+    updateUserRole,
+  };
 
   return {
     ...state,

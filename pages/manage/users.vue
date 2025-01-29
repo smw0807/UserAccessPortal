@@ -87,11 +87,10 @@ const updateStatus = async (email: string, status: string) => {
 
 // 회원 추가
 const addUser = async (user: AddUserType) => {
-  console.log('user', user);
-  // const result = await manageStore.addUser(user);
-  // if (result) {
-  //   await findAllUsers();
-  // }
+  const result = await manageStore.addUser(user);
+  if (result) {
+    await findAllUsers();
+  }
 };
 
 onMounted(() => {
