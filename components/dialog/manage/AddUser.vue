@@ -2,6 +2,7 @@
 export type AddUserType = {
   email: string;
   name: string;
+  password: string;
   phoneNumber: string;
   role: string;
   status: string;
@@ -17,6 +18,8 @@ const handleClose = () => (open.value = false);
 const form = ref();
 const email = ref('');
 const name = ref('');
+const password = ref('');
+const passwordConfirm = ref('');
 const phoneNumber = ref('');
 const role = ref('');
 const status = ref('');
@@ -37,6 +40,7 @@ const handleAddUser = async () => {
     emit('addUser', {
       email: email.value,
       name: name.value,
+      password: password.value,
       phoneNumber: phoneNumber.value,
       role: role.value,
       status: status.value,
@@ -52,6 +56,18 @@ const handleAddUser = async () => {
         <v-form ref="form">
           <v-text-field v-model="email" :rules="rules.email" label="이메일" />
           <v-text-field v-model="name" :rules="rules.text" label="이름" />
+          <v-text-field
+            v-model="password"
+            :rules="rules.password"
+            label="비밀번호"
+            type="password"
+          />
+          <v-text-field
+            v-model="passwordConfirm"
+            :rules="rules.passwordConfirm(password)"
+            label="비밀번호 확인"
+            type="password"
+          />
           <v-text-field
             v-model="phoneNumber"
             :rules="rules.phoneNumber"
