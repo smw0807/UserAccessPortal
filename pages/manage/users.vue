@@ -1,20 +1,22 @@
 <script setup lang="ts">
-import { useUserStore } from '~/store/user';
-import dayjs from 'dayjs';
 import type { FindAllUsersQuery } from '#gql';
+import { useUserStore } from '~/store/user';
 import { useManageStore } from '~/store/manage';
 import type { AddUserType } from '~/components/dialog/manage/AddUser.vue';
+import dayjs from 'dayjs';
 
-const userStore = useUserStore();
 const manageStore = useManageStore();
-const pageSize = ref(10);
-const pageIndex = ref(1);
+const userStore = useUserStore();
+const size = computed(() => manageStore.size);
+const page = computed(() => manageStore.page);
+const totalCount = computed(() => manageStore.totalCount);
+const pageLength = computed(() => Math.ceil(totalCount.value / size.value));
 const keyword = ref('');
 const loading = ref(false);
 const showTable = ref(false);
 
 // 회원 목록
-const cUsers = computed(() => userStore.users);
+const cUsers = computed(() => manageStore.users);
 
 // 테이블 헤더
 const headers = ref([
@@ -32,9 +34,9 @@ const headers = ref([
 // 회원 목록 조회
 const findAllUsers = async () => {
   loading.value = true;
-  await userStore.findAllUsers({
-    page: pageIndex.value,
-    size: pageSize.value,
+  await manageStore.findAllUsers({
+    page: page.value,
+    size: size.value,
     keyword: keyword.value,
   });
   loading.value = false;
@@ -42,10 +44,10 @@ const findAllUsers = async () => {
 
 // 페이지 클릭 이벤트
 const onPageClick = (page: number) => {
-  pageIndex.value = page;
-  userStore.findAllUsers({
-    size: pageSize.value,
-    page: pageIndex.value,
+  manageStore.page = page;
+  manageStore.findAllUsers({
+    size: size.value,
+    page: page,
     keyword: keyword.value,
   });
 };
@@ -182,9 +184,10 @@ onMounted(() => {
         </template>
       </v-data-table>
       <v-pagination
-        v-model="pageIndex"
-        :length="cUsers?.totalCount"
-        @click="onPageClick(pageIndex)"
+        v-model="manageStore.page"
+        :length="pageLength"
+        :total-visible="10"
+        @click="onPageClick(manageStore.page)"
       />
     </v-card-text>
   </v-card>

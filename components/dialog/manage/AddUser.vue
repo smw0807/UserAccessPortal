@@ -13,7 +13,9 @@ const emit = defineEmits<{
 }>();
 const open = ref(false);
 const handleOpen = () => (open.value = true);
-const handleClose = () => (open.value = false);
+const handleClose = () => {
+  open.value = false;
+};
 
 const form = ref();
 const email = ref('');

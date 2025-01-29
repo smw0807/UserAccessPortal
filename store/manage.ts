@@ -1,3 +1,4 @@
+import type { FindAllUsersQuery, UserSearchInput } from '#gql';
 import type { AddUserType } from '~/components/dialog/manage/AddUser.vue';
 
 export const useManageStore = defineStore('manageStore', () => {
@@ -5,9 +6,26 @@ export const useManageStore = defineStore('manageStore', () => {
   const GqlInstance = useGql();
 
   // ============= STATE =============
-  const state = {};
+  const page = ref(1);
+  const size = ref(10);
+  const totalCount = ref(0);
+  const users = ref<FindAllUsersQuery['findAllUsers']['users']>();
+  const state = { page, size, totalCount, users };
 
   // ============= ACTIONS =============
+  // 회원 목록 조회
+  const findAllUsers = async (filter: UserSearchInput) => {
+    try {
+      const data = await GqlInstance('FindAllUsers', { filter });
+      console.log('data', data.findAllUsers);
+      if (data.findAllUsers?.success && data.findAllUsers?.users) {
+        totalCount.value = data.findAllUsers.totalCount ?? 0;
+        users.value = data.findAllUsers.users;
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   // 회원 추가
   const addUser = async (user: AddUserType) => {
@@ -113,6 +131,7 @@ export const useManageStore = defineStore('manageStore', () => {
     }
   };
   const actions = {
+    findAllUsers,
     addUser,
     savePhoneNumber,
     updateUserStatus,
